@@ -1,21 +1,27 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://malonkinartem:Cool1989@ds033607.mlab.com:33607/fut-app');
+var config = require('../config');
+mongoose.connect(config.databaseUrl);
 
 var db = mongoose.connection;
+mongoose.set('debug', true)
 
 var Repo = function GenericRepository(modelSchema, collectionName) {
 
     this.configurationSchema = mongoose.Schema(modelSchema);
-    this.model = mongoose.model(collectionName, this.configurationSchema);
+    this.model = mongoose.model(collectionName , this.configurationSchema);
 
     this.find = function(query){
         var self = this;
         var promise = new Promise((resolve, reject) => {
 
             self.model.find(query, function (err, items) {
-               return resolve(items);
+                if(!!err){
+                    reject(err);
+                }
+                else{
+                    resolve(items);
+                }
             })
-
         });
 
         return promise;
@@ -23,24 +29,49 @@ var Repo = function GenericRepository(modelSchema, collectionName) {
 
     this.get = function(query){
         var self = this;
-        var promise = new Promise((resolve, reject)=>{
-            if(db._hasOpened){
-                self.find(undefined)
-                    .then(result => resolve(result));
-            }
-            else{
-                db.once('open', function() {
-                    self.find(undefined)
-                        .then(result => resolve(result));
+        
+        if(db._hasOpened){
+            return self.find(undefined);
+        }
+        else{
+            db.once('open', function() {
+                return self.find(undefined);
+            });
+        }
+
+        return promise;
+    }
+
+
+    this.saveConfiguration = function(data){
+        var self = this;
+
+        var promise = new Promise((resolve, reject) => {
+            var obj = new self.model(data);
+                obj.save(function(err, result){
+                    if(err){
+                        reject(err);
+                    }
+                    else{
+                        resolve(result);
+                    }
                 });
-            }
         });
 
         return promise;
     }
+
+    this.add = function(data){
+        var self = this;
+        if(db._hasOpened){
+            return this.saveConfiguration(data);
+        }
+        else{
+            db.once('open', function() {
+                return this.saveConfiguration(data);
+            });
+        }
+    }
 }
-
-
-
 
 module.exports = Repo;

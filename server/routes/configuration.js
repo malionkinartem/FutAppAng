@@ -1,5 +1,5 @@
 var GenericRepository = require('../services/generic-repository');
-const collectionName = 'Configuration'
+const collectionName = 'configurations'
 
 function Configuration() {
     var schema = {
@@ -18,23 +18,10 @@ function Configuration() {
     };
 
     GenericRepository.apply(this, [schema, collectionName]);
-
-    this.saveConfiguration = function(data, callback){
-    }
 }
 
 var conf = new Configuration();
 
-conf.add = function(data, callback){
-    var self = this;
-    if(db._hasOpened){
-        self.saveConfiguration(data, callback);
-    }
-    else{
-        db.once('open', function() {
-            self.saveConfiguration(data, callback);
-        });
-    }
-}
+
 
 module.exports = conf;

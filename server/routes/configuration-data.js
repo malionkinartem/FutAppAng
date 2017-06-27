@@ -1,11 +1,11 @@
 var GenericRepository = require('../services/generic-repository');
-const collectionName = 'DataLists'
+const collectionName = 'datalists'
 
 function ConfigurationData() {
   // var repo = new GenericRepository({ id: String }, '123');
   var schema = {
     type: String,
-    id: number,
+    id: Number,
     value: String
   }
   GenericRepository.apply(this, [schema, collectionName]);
@@ -14,4 +14,4 @@ function ConfigurationData() {
 
 var confData = new ConfigurationData();
 
-exports.configurationData = confData;
+module.exports = confData;
