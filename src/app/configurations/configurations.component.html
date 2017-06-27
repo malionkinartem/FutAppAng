@@ -1,0 +1,9 @@
+<div>
+  <h1>Search Configurations</h1>
+  <a [routerLink]="['/configurations','new']">New</a>
+  <div class="row">
+    <div class="col-md-5" *ngFor="let config of configurations">
+      <configuration-thumbnail [config]="config"></configuration-thumbnail>
+    </div>
+  </div>
+</div>

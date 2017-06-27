@@ -1,0 +1,21 @@
+<div class="thumbnail"> 
+  <div>Player Id: {{ config?.playerid }}</div>
+  <div>Level: {{ config?.level }}</div>
+  <div class="row">
+    <div class="col-md-6">Min Price: {{ config?.minprice || 0 }}</div>
+    <div class="col-md-6">Max Price: {{ config?.maxprice }}</div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">League Id: {{ config?.league }}</div>
+    <div class="col-md-6">Team Id: {{ config?.teamid }}</div>
+  </div>
+  
+  <div>Position: {{ config?.position }}</div>
+  <div>Nation Id: {{ config?.nationid }}</div>
+  <div [ngSwitch]="config?.enabled">
+    <span *ngSwitchCase="true">Enabled</span>
+    <span *ngSwitchCase="false">Disabled</span>
+  </div>
+</div>
+
+<!-- [routerLink]="['/configuration', config.id]" -->

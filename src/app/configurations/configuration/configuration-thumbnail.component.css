@@ -1,0 +1,26 @@
+.green {
+    color: green
+}
+.bold {
+    font-weight: bold
+}
+.pad-left {
+    margin-left: 10px;
+}
+.dell div {
+    color: #bbb;
+}
+.thumbnail {
+    min-height: 210px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.thumbnail:hover {
+    background-color: #708fc1;
+    cursor:pointer;
+}
+
+a {
+    cursor: pointer;
+}
