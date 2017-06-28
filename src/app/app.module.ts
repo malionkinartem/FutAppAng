@@ -12,15 +12,6 @@ import { appRoutes } from './routes'
 import { CreateConfigurationComponent } 
        from './configurations/create-configuration/create-configuration.component'
 
-// const ROUTES = [
-//   {
-//     path: '',
-//     redirectTo: 'configurations',
-//     pathMatch: 'full'
-//   },
-//   { path: 'configurations', component: ConfigurationsComponent  }
-//   { path: 'configurations/new', component: }
-// ];
 
 @NgModule({
   declarations: [

@@ -48,6 +48,7 @@ var Repo = function GenericRepository(modelSchema, collectionName) {
 
         var promise = new Promise((resolve, reject) => {
             var obj = new self.model(data);
+                
                 obj.save(function(err, result){
                     if(err){
                         reject(err);
@@ -68,8 +69,30 @@ var Repo = function GenericRepository(modelSchema, collectionName) {
         }
         else{
             db.once('open', function() {
-                return this.saveConfiguration(data);
+                return self.saveConfiguration(data);
             });
+        }
+    }
+    
+    this.deleteAll = async function(){
+        var self = this;
+        if(db._hasOpened){
+            await this.model.deleteMany({});
+        }
+        else{
+            await db.once('open');
+            await self.model.deleteMany({}); 
+        }
+    }
+
+    this.saveMany = async function(list){
+        var self = this;
+        if(db._hasOpened){
+            await this.model.insertMany(list);
+        }
+        else{
+            await db.once('open');
+            await self.model.insertMany(list);
         }
     }
 }

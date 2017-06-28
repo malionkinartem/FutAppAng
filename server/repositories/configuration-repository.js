@@ -1,4 +1,4 @@
-var GenericRepository = require('../services/generic-repository');
+var GenericRepository = require('./generic-repository');
 const collectionName = 'configurations'
 
 function Configuration() {
@@ -21,7 +21,5 @@ function Configuration() {
 }
 
 var conf = new Configuration();
-
-
 
 module.exports = conf;
