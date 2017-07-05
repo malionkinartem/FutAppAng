@@ -10,67 +10,30 @@ var Repo = function GenericRepository(modelSchema, collectionName) {
     this.configurationSchema = mongoose.Schema(modelSchema);
     this.model = mongoose.model(collectionName , this.configurationSchema);
 
-    this.find = function(query){
-        var self = this;
-        var promise = new Promise((resolve, reject) => {
-
-            self.model.find(query, function (err, items) {
-                if(!!err){
-                    reject(err);
-                }
-                else{
-                    resolve(items);
-                }
-            })
-        });
-
-        return promise;
-    }
-
-    this.get = function(query){
+    this.get = async function(query){
         var self = this;
         
         if(db._hasOpened){
-            return self.find(undefined);
+            return await self.model.find(query);
         }
         else{
-            db.once('open', function() {
-                return self.find(undefined);
-            });
+            await db.once('open');
+            return await self.model.find(query);
         }
 
         return promise;
     }
 
-
-    this.saveConfiguration = function(data){
+    this.add = async function(data){
         var self = this;
+        var obj = new self.model(data);
 
-        var promise = new Promise((resolve, reject) => {
-            var obj = new self.model(data);
-                
-                obj.save(function(err, result){
-                    if(err){
-                        reject(err);
-                    }
-                    else{
-                        resolve(result);
-                    }
-                });
-        });
-
-        return promise;
-    }
-
-    this.add = function(data){
-        var self = this;
-        if(db._hasOpened){
-            return this.saveConfiguration(data);
+        if(db._hasOpened){            
+            await obj.save();
         }
-        else{
-            db.once('open', function() {
-                return self.saveConfiguration(data);
-            });
+        else {
+            await db.once('open');
+            await obj.save();
         }
     }
     

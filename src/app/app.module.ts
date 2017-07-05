@@ -1,16 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-import { ConfigurationsService } from './configurations/shared/configurations.service';
 import { ConfigurationsComponent } from './configurations/configurations.component';
 import { ConfigurationThumbnailComponent } from './configurations/configuration/configuration-thumbnail.component';
 import './rxjs-extensions'
 import { appRoutes } from './routes'
 import { CreateConfigurationComponent } 
        from './configurations/create-configuration/create-configuration.component'
+import { ConfigurationsService, DataListsService } from './configurations/shared/index'
 
 
 @NgModule({
@@ -24,10 +24,12 @@ import { CreateConfigurationComponent }
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    ReactiveFormsModule
   ],
   providers: [
-    ConfigurationsService
+    ConfigurationsService,
+    DataListsService
   ],
   bootstrap: [AppComponent]
 })

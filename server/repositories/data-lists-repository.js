@@ -13,7 +13,5 @@ function ConfigurationData() {
   GenericRepository.apply(this, [schema, collectionName]);
 }
 
-
 var confData = new ConfigurationData();
-
 module.exports = confData;

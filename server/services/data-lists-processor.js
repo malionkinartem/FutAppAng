@@ -24,7 +24,7 @@ function DataListsProcessor(){
         }
 
         await configData.deleteAll();
-        await configData.saveMany(dataList.map(x=>x.value));
+        await configData.saveMany(dataList.map(x => x.value));
     }
 
     function getPlayersDataLists(playersList){

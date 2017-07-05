@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const conf = require('../repositories/configuration-repository');
 var confData = require('../repositories/data-lists-repository')
-var dataProcessor = require('../services/datalists-processor')
+var dataProcessor = require('../services/data-lists-processor')
+var dataListsRoute = require('./data-lists')
+
+router.get('/datalists/type/:type', dataListsRoute.get)
 
 /* GET api listing. */
 router.get('/', (req, res) => {
