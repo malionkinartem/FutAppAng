@@ -3,6 +3,8 @@ import { Http, Response } from '@angular/http'
 import { settings } from '../../config'
 import { IdValueType } from './id-value-type'
 import { Observable } from 'rxjs/Observable'
+import { IClub } from './club.model'
+import { ILeague } from './league.model'
 
 @Injectable()
 export class DataListsService {
@@ -23,13 +25,8 @@ export class DataListsService {
       });
   }
 
-  public getClubs(): Observable<IdValueType[]>{
-    return this.http.get(settings.apiUrl + '/api/datalists/type/club')
-      .map((res: Response) => <IdValueType[]>res.json());
-  }
-
-  public getLeagues(): Observable<IdValueType[]>{
-    return this.http.get(settings.apiUrl + '/api/datalists/type/league')
-      .map((res: Response) => <IdValueType[]>res.json());
+  public getLeagues(): Observable<ILeague[]>{
+    return this.http.get(settings.apiUrl + '/api/leagues')
+      .map((res: Response) => <ILeague[]>res.json());
   }  
 }

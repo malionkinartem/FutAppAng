@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DataListsService } from '../shared/data-lists.service'
 import { IdValueType } from '../shared/id-value-type'
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms'
- 
+import { ILeague } from '../shared/league.model'
+import { IClub } from '../shared/club.model'
+
 @Component({
   selector: 'create-configuration',
   templateUrl: './create-configuration.component.html',
@@ -14,38 +16,55 @@ export class CreateConfigurationComponent implements OnInit {
 
   nations: IdValueType[];
   clubs: IdValueType[];
-  leagues: IdValueType[];
+  leagues: ILeague[];
 
-  selectedNation: FormControl;
-  selectedLeague: FormControl;
-  selectedClub: FormControl;
   level: FormControl;
   minPrice: FormControl;
   maxPrice: FormControl;
 
+  selectedLeague: ILeague;
+  selectedNation: IdValueType;
+  selectedClub: IClub;
+
   constructor(private dataService: DataListsService) {
-    this.newConfigurationForm = new FormGroup({
-      selectedNation: new FormControl(),
-      selectedLeague: new FormControl(),
-      selectedClub: new FormControl(),
-      level: new FormControl(),
-      minPrice: new FormControl(),
-      maxPrice: new FormControl()
-    });
+    // this.newConfigurationForm = new FormGroup({
+    //   selectedNation: new FormControl(),
+    //   // selectedLeague: new FormControl(),
+    //   selectedClub: new FormControl(),
+    //   level: new FormControl(),
+    //   minPrice: new FormControl(),
+    //   maxPrice: new FormControl()
+    // });
+    this.clubs = null;
+    this.selectedLeague = null;
+    this.selectedNation = null;
+    this.selectedClub = null;
   }
 
   ngOnInit() {
     this.dataService.getNations()
       .subscribe(data => this.nations = data);
-    
-    this.dataService.getClubs()
-      .subscribe(data => this.clubs = data)
 
     this.dataService.getLeagues()
       .subscribe(data => this.leagues = data)
   }
 
-  save(values){
+  save(values) {
     let a = 0;
+  }
+
+  onChangeLeague(newLeague) {
+    if (!!newLeague) {
+      this.selectedClub = null;
+      this.clubs = newLeague.clubs;
+    }
+    else{
+      this.selectedClub = null;
+      this.clubs = null;
+    }
+  }
+
+  onChangeClub(newClub) {
+      this.selectedClub = newClub;
   }
 }

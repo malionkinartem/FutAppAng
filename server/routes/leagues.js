@@ -1,7 +1,7 @@
-var dataListsRepository = require('../repositories/data-lists-repository')
+var leaguesRepository = require('../repositories/leagues-repository')
 
 module.exports.get = function(req, res){
-    dataListsRepository.get(req.params)
+    leaguesRepository.get(req.params)
         .then(configs => {
             res.status(200).json(configs);
         })

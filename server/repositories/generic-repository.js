@@ -20,8 +20,6 @@ var Repo = function GenericRepository(modelSchema, collectionName) {
             await db.once('open');
             return await self.model.find(query);
         }
-
-        return promise;
     }
 
     this.add = async function(data){

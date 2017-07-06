@@ -1,7 +1,7 @@
 var GenericRepository = require('./generic-repository');
-const collectionName = 'configurations'
 
 function Configuration() {
+    const collectionName = 'configurations';
     var schema = {
         playerid: String,
         level: String,

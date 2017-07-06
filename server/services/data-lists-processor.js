@@ -1,16 +1,62 @@
 var axios = require('axios')
 var config = require('../config')
-var configData = require('../repositories/data-lists-repository')
+var configRepo = require('../repositories/data-lists-repository')
+var leaguesRepo = require('../repositories/leagues-repository')
 
 function DataListsProcessor(){
     this.update = async function(){
-        
-        var firstPage = (await axios.get(config.playersUrl)).data;
-        var totalPages = firstPage.totalPages;
+        var data = {
+            genericLists: [],
+            leagues: []
+        };  
 
-        var dataList = getPlayersDataLists(firstPage.items);
+        var dataArr = await getPlayersData();
 
-        for(var i = 2; i < totalPages; i++){
+        var iteration = 0;
+        dataArr.forEach(function(playersDataPage){
+            console.log("iteration " + iteration);
+            populatePlayersData(playersDataPage.items, data);
+            iteration++;
+        });
+
+        await configRepo.deleteAll();
+        await configRepo.saveMany(data.genericLists.map(x => x.value));
+
+        await leaguesRepo.deleteAll();
+        await leaguesRepo.saveMany(data.leagues);
+    }
+
+    function populatePlayersData(playersList, processedData){
+
+        playersList.forEach(function(player) {
+
+            var teamRelation = getTeamRelationData(player);
+
+            if(!processedData.genericLists.find(x=> x.id === teamRelation.nation.id + teamRelation.nation.type)){
+                processedData.genericLists.push({id: teamRelation.nation.id + teamRelation.nation.type, value: teamRelation.nation})
+            }
+
+            var foundLeague = processedData.leagues.find(x=> x.id === teamRelation.league.id);
+            if(!foundLeague){
+                teamRelation.league.clubs = [teamRelation.club];
+                processedData.leagues.push(teamRelation.league);
+            }
+            else{
+                if(!foundLeague.clubs.find(x=>x.id === teamRelation.club.id)){
+                    console.log("league: " + foundLeague.name + " added league: " + 
+                        teamRelation.league.name + " club " + teamRelation.club.name);
+                    foundLeague.clubs.push(teamRelation.club);
+                }
+            }
+
+        }, this);
+    }
+
+    async function getPlayersData(){
+        var array = [];
+
+        var i =1;
+        do {
 
             var pageData = (await axios.get(config.playersUrl, {
                 params:{
@@ -18,37 +64,10 @@ function DataListsProcessor(){
                 }
             })).data;
 
-            var pageDataList = getPlayersDataLists(pageData.items);
-
-            dataList = mergeArrays(dataList, pageDataList);
-        }
-
-        await configData.deleteAll();
-        await configData.saveMany(dataList.map(x => x.value));
-    }
-
-    function getPlayersDataLists(playersList){
-        var array = [];
-
-        playersList.forEach(function(element) {
-
-            var nation = getPlayerNation(element);
-            var league = getPlayerLeague(element);
-            var club = getPlayerClub(element);
-
-            if(!array.find(x=> x.id === nation.id + nation.type)){
-                array.push({id: nation.id + nation.type, value: nation})
-            }
-
-            if(!array.find(x=> x.id === league.id + league.type)){
-                array.push({id: league.id + league.type, value: league})
-            }
-
-            if(!array.find(x=> x.id === club.id + club.type)){
-                array.push({id: club.id + club.type, value: club})
-            }
-
-        }, this);
+            array.push(pageData);
+            
+            i++;
+        } while (i - 1 < pageData.totalPages);
 
         return array;
     }
@@ -64,42 +83,27 @@ function DataListsProcessor(){
         
     function getPlayerLeague(player){
         return {
-            value: player.league.name,
+            name: player.league.name,
             id: player.league.id,
-            shortValue: player.league.abbrName,
-            type: 'league'
+            shortName: player.league.abbrName,
+            clubs: []
         }
     }
 
     function getPlayerClub(player){
         return {
-            value: player.club.name,
+            name: player.club.name,
             id: player.club.id,
-            shortValue: player.club.abbrName,
-            type: 'club'
+            shortName: player.club.abbrName,
         }
     }
 
-    function isExist(item, id){
-        return item.id === id;
-    }
-
-    function mergeArrays(arr1, arr2){
-        if(arr2.length == 0){
-            return arr1;
+    function getTeamRelationData(player){
+        return{
+            nation: getPlayerNation(player),
+            league: getPlayerLeague(player),
+            club: getPlayerClub(player)
         }
-
-        if(arr1.length == 0){
-            return arr2;
-        }
-
-        arr2.forEach(function(element) {
-            if(!arr1.find(x=>x.id == element.id)){
-                arr1.push(element);
-            }
-        }, this);
-
-        return arr1;
     }
 }
 
