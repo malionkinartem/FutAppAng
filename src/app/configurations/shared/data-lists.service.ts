@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http'
 import { settings } from '../../config'
-import { IdValueType } from './id-value-type'
+import { IIdValueType, IClub, ILeague } from './index'
 import { Observable } from 'rxjs/Observable'
-import { IClub } from './club.model'
-import { ILeague } from './league.model'
 
 @Injectable()
 export class DataListsService {
@@ -15,18 +13,18 @@ export class DataListsService {
 
   }
 
-  public getNations(): Observable<IdValueType[]>{
-    return this.http.get(settings.apiUrl + '/api/datalists/type/nation')
+  public getNations(): Observable<IIdValueType[]>{
+    return this.http.get(settings.apiUrl + '/datalists/type/nation')
       .map((res: Response) => 
       {
-        var nations = <IdValueType[]>res.json()
+        var nations = <IIdValueType[]>res.json()
 
         return nations.sort((x, y) => x.value > y.value ? 1 : -1);
       });
   }
 
   public getLeagues(): Observable<ILeague[]>{
-    return this.http.get(settings.apiUrl + '/api/leagues')
+    return this.http.get(settings.apiUrl + '/leagues')
       .map((res: Response) => <ILeague[]>res.json());
   }  
 }

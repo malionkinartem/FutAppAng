@@ -1,2 +1,6 @@
-export *  from './configurations.service'
+export * from './configurations.service'
 export * from './data-lists.service'
+export * from './models/iconfiguration.model'
+export * from './models/iid-value-type.model'
+export * from './models/ileague.model'
+export * from './models/iclub.model'

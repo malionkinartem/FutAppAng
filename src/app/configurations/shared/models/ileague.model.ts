@@ -1,4 +1,4 @@
-import { IClub } from './club.model'
+import { IClub } from './iclub.model'
 
 export interface ILeague{
     name: String,

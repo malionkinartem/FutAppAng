@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { DataListsService } from '../shared/data-lists.service'
-import { IdValueType } from '../shared/id-value-type'
-import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms'
-import { ILeague } from '../shared/league.model'
-import { IClub } from '../shared/club.model'
+import { Router } from '@angular/router'
+import { FormsModule, ReactiveFormsModule, FormGroup, 
+  FormControl } from '@angular/forms'
+import { ILeague, IClub, IConfiguration, IIdValueType,
+  DataListsService, ConfigurationsService } from '../shared/index'
+
 
 @Component({
   selector: 'create-configuration',
@@ -14,31 +15,46 @@ export class CreateConfigurationComponent implements OnInit {
 
   newConfigurationForm: FormGroup
 
-  nations: IdValueType[];
-  clubs: IdValueType[];
+  nations: IIdValueType[];
+  clubs: IClub[];
   leagues: ILeague[];
 
   level: FormControl;
   minPrice: FormControl;
   maxPrice: FormControl;
 
-  selectedLeague: ILeague;
-  selectedNation: IdValueType;
-  selectedClub: IClub;
+  controlLeaguesList: any[];
+  controlClubsList: any[];
+  controlLevelList = [
+    { id: -1, text: 'All' },
+    { id: 1, text: 'Gold' },
+    { id: 2, text: 'Silver' },
+    { id: 3, text: 'Bronze' }];
 
-  constructor(private dataService: DataListsService) {
-    // this.newConfigurationForm = new FormGroup({
-    //   selectedNation: new FormControl(),
-    //   // selectedLeague: new FormControl(),
-    //   selectedClub: new FormControl(),
-    //   level: new FormControl(),
-    //   minPrice: new FormControl(),
-    //   maxPrice: new FormControl()
-    // });
+  selectedLeague: ILeague;
+  selectedClub: IClub;
+  selectedLevel: String;
+
+  constructor(
+    private dataService: DataListsService, 
+    private configurationService: ConfigurationsService,
+    private router: Router) {
+
+    this.minPrice = new FormControl();
+    this.maxPrice = new FormControl();
+
+    this.controlLeaguesList = new Array();
+    this.controlLeaguesList.push({id: -1, text: 'All'});
+
+    this.controlClubsList = new Array();    
+    this.controlClubsList.push({id: -1, text: 'All'});
+
+    this.newConfigurationForm = new FormGroup({
+      minPrice: this.minPrice,
+      maxPrice: this.maxPrice 
+    });
+
     this.clubs = null;
-    this.selectedLeague = null;
-    this.selectedNation = null;
-    this.selectedClub = null;
   }
 
   ngOnInit() {
@@ -46,25 +62,60 @@ export class CreateConfigurationComponent implements OnInit {
       .subscribe(data => this.nations = data);
 
     this.dataService.getLeagues()
-      .subscribe(data => this.leagues = data)
+      .subscribe(data => {
+
+      this.leagues = data;
+      this.controlLeaguesList = this.controlClubsList.concat(this.leagues.map(x => { return { id: x.id, text: x.name }; }));
+    });
   }
 
   save(values) {
-    let a = 0;
+    let newConfiguration: IConfiguration =  {
+      playerid: '',
+      buynowprice: '',
+      enabled: true,
+      isRare: false,
+      league: this.selectedLeague != null ? this.selectedLeague.id : 0,
+      level: this.selectedLevel,
+      teamid: this.selectedClub != null ? this.selectedClub.id : 0,
+      maxprice: values.maxPrice,
+      minprice: values.minPrice,
+      nationid: 0,
+      position: '',
+      zone: ''
+    };
+
+    this.configurationService.save(newConfiguration)
+      .then( () => {
+        this.router.navigate(['configurations'])
+      })
+      .catch(x=> console.log(x));
   }
 
-  onChangeLeague(newLeague) {
-    if (!!newLeague) {
-      this.selectedClub = null;
-      this.clubs = newLeague.clubs;
+  onChangeLeague(newLeague) {    
+    if (newLeague.id !== -1) {
+      this.selectedLeague = this.leagues.find(x => x.id === newLeague.id);
+      this.clubs = this.selectedLeague.clubs;
+      
+      this.controlClubsList = this.clubs.map(x=> { return { id: x.id, text: x.name }; });
+      this.controlClubsList.unshift({id: -1, text: 'All'});
+    }
+    else {
+      this.clubs = null;
+      this.controlClubsList = this.controlClubsList.filter(x=>x.id === -1);
+    }
+  }
+  
+  onChangeClub(newClub){
+    if(newClub.id !== -1){
+      this.selectedClub = this.clubs.find(x => x.id === newClub.id) 
     }
     else{
       this.selectedClub = null;
-      this.clubs = null;
     }
   }
 
-  onChangeClub(newClub) {
-      this.selectedClub = newClub;
+  onChangeLevel(newLevel){
+    this.selectedLevel = newLevel.text;
   }
 }

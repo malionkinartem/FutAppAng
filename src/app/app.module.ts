@@ -11,6 +11,7 @@ import { appRoutes } from './routes'
 import { CreateConfigurationComponent } 
        from './configurations/create-configuration/create-configuration.component'
 import { ConfigurationsService, DataListsService } from './configurations/shared/index'
+import { SelectModule } from 'ng2-select'
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ConfigurationsService, DataListsService } from './configurations/shared
     FormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SelectModule
   ],
   providers: [
     ConfigurationsService,

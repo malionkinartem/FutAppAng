@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ISearchConfig } from '../configurations/shared/isearch-config.model';
+import { IConfiguration } from '../configurations/shared/index';
 import { ConfigurationsService } from '../configurations/shared/configurations.service';
 
 
@@ -10,7 +10,7 @@ import { ConfigurationsService } from '../configurations/shared/configurations.s
   styleUrls: ['./configurations.component.css']
 })
 export class ConfigurationsComponent implements OnInit {
-  configurations: ISearchConfig[];
+  configurations: IConfiguration[];
 
   constructor(private configService: ConfigurationsService) { }
 

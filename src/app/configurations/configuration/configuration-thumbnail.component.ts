@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { ISearchConfig } from '../shared/isearch-config.model';
+import { IConfiguration } from '../shared/index';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { ISearchConfig } from '../shared/isearch-config.model';
 })
 
 export class ConfigurationThumbnailComponent implements OnInit {
-  @Input() config: ISearchConfig;
+  @Input() config: IConfiguration;
 
   constructor() { }
 

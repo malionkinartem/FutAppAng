@@ -7,6 +7,7 @@ var dataProcessor = require('../services/data-lists-processor')
 
 var dataListsRoute = require('./data-lists')
 var leaguesRoute = require('./leagues')
+var configurationsRoute = require('./configurations')
 
 router.get('/datalists/type/:type', dataListsRoute.get)
 
@@ -17,16 +18,9 @@ router.get('/', (req, res) => {
   res.send('api works');
 });
 
-//Get all configurations
-router.get('/configurations', (req, res) => {
-  conf.get()
-    .then(configs => {
-      res.status(200).json(configs);
-    })
-    .catch(error => {
-      res.status(500).send(error)
-    });
-});
+//configurations
+router.get('/configurations', configurationsRoute.get);
+router.post('/configurations', configurationsRoute.save);
 
 router.get('/configurationdata/process', (req, res) => {
   dataProcessor.update()
