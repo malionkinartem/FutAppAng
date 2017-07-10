@@ -1,50 +1,53 @@
 <h4>Create New Configuration</h4>
 
-<form [formGroup]="newConfigurationForm" (ngSubmit)="save(newConfigurationForm.value)" class="thumbnail col-md-5 form-group">
-  <div>Player Id: {{ config?.playerid }}</div>
-  <div>
-    <label for="level">Level:</label>
+<form [formGroup]="newConfigurationForm" (ngSubmit)="save(newConfigurationForm.value)" class="thumbnail col-md-6">
+  <div class="form-group">
+    <label for="players">Player</label>
     <ng-select 
-        [items]="controlLevelList"  
-        [active]="controlLevelList" 
-        (selected)="onChangeLevel($event)">
-     </ng-select>
+      [items]="controlPlayerList"
+      [active]="controlPlayerList"
+      (selected)="onChangePlayer($event)"
+      >
+    </ng-select>
+  </div>
+  <div class="form-group">
+    <label for="level">Level:</label>
+    <ng-select [items]="controlLevelList" [active]="controlLevelList" (selected)="onChangeLevel($event)">
+    </ng-select>
   </div>
 
-  <div class="row">
-    <div class="col-md-6">
+  <div class="form-group">
+    <div>
       <label for="minPrice">Min Price:</label>
       <input formControlName="minPrice" name="minPrice" type="text" class="form-control" />
     </div>
-    <div class="col-md-6">
+    <div>
       <label for="maxPrice">Max Price:</label>
       <input formControlName="maxPrice" name="maxPrice" type="text" class="form-control" />
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-6">
-      <label for="selectedLeague">League:</label>      
-      <ng-select 
-        [items]="controlLeaguesList"  
-        [active]="controlLeaguesList" 
-        (selected)="onChangeLeague($event)">
-      </ng-select>
+  <div class="form-group">
+    <label for="nations">Nation:</label>
+    <ng-select [items]="controlNationList" [active]="controlNationList" (selected)="onChangeNation($event)">
+    </ng-select>
+  </div>
 
+  <div class="form-group">
+    <div>
+      <label for="selectedLeague">League:</label>
+      <ng-select [items]="controlLeaguesList" [active]="controlLeaguesList" (selected)="onChangeLeague($event)">
+      </ng-select>
     </div>
-    <div class="col-md-6">
+    <div>
       <label for="clubs">Club:</label>
-      <ng-select 
-        [items]="controlClubsList"
-        [active]="controlClubsList"
-        (selected)="onChangeClub($event)"
-        [disabled]="controlClubsList?.length <= 1">
+      <ng-select [items]="controlClubsList" [active]="controlClubsList" (selected)="onChangeClub($event)" [disabled]="controlClubsList?.length <= 1">
       </ng-select>
     </div>
   </div>
 
   <div class="form-group">
     <button type="submit" class="btn btn-primary">Save</button>
-    <button type="button" class="btn btn-default" (click)="cancel">Cancel</button>
+    <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
   </div>
 </form>

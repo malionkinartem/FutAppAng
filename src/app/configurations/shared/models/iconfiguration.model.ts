@@ -1,5 +1,5 @@
 export interface IConfiguration {
-        playerid: String,
+        playerid: Number,
         level: String,
         minprice: String,
         maxprice: String,
