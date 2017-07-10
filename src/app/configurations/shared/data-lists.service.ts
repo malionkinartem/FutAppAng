@@ -22,20 +22,8 @@ export class DataListsService {
       });
   }
 
-  public getNation(id: Number): Observable<IIdValueType> {
-    return this.http.get(settings.apiUrl + '/datalists/type/nation/' + id)
-      .map((res: Response) => {
-        return <IIdValueType> res.json()
-      })
-  }
-
   public getLeagues(): Observable<ILeague[]> {
     return this.http.get(settings.apiUrl + '/leagues')
       .map((res: Response) => <ILeague[]>res.json());
-  }
-
-  public getLeague(id: Number): Observable<ILeague> {
-    return this.http.get(settings.apiUrl + '/leagues/' + id)
-      .map((res: Response) => <ILeague>res.json());
   }
 }
