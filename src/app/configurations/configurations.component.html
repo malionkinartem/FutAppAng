@@ -3,7 +3,7 @@
   <a [routerLink]="['/configurations','new']">New</a>
   <div class="row">
     <div class="col-md-5" *ngFor="let config of configurations">
-      <configuration-thumbnail [config]="config"></configuration-thumbnail>
+      <configuration-thumbnail [configuration]="config"></configuration-thumbnail>
     </div>
   </div>
 </div>

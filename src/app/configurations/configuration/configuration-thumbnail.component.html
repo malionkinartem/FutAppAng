@@ -1,21 +1,19 @@
-<div class="thumbnail"> 
-  <div>Player Id: {{ config?.playerid }}</div>
-  <div>Level: {{ config?.level }}</div>
+<div class="container thumbnail"> 
+  <div [hidden]="!configuration?.player?.value">Player: {{ configuration?.player?.value }}</div>
+  <div [hidden]="!configuration?.level">Level: {{ configuration?.level }}</div>
   <div class="row">
-    <div class="col-md-6">Min Price: {{ config?.minprice || 0 }}</div>
-    <div class="col-md-6">Max Price: {{ config?.maxprice }}</div>
+    <div class="col-md-6" [hidden]="!configuration?.minprice">Min Price: {{ configuration?.minprice || 0 }}</div>
+    <div class="col-md-6" [hidden]="!configuration?.maxprice">Max Price: {{ configuration?.maxprice }}</div>
   </div>
   <div class="row">
-    <div class="col-md-6">League Id: {{ config?.league }}</div>
-    <div class="col-md-6">Team Id: {{ config?.teamid }}</div>
+    <div class="col-md-6" [hidden]="!configuration?.league?.value">League: {{ configuration?.league?.value }}</div>
+    <div class="col-md-6" [hidden]="!configuration?.team?.value">Team: {{ configuration?.team?.value }}</div>
   </div>
   
-  <div>Position: {{ config?.position }}</div>
-  <div>Nation Id: {{ config?.nationid }}</div>
-  <div [ngSwitch]="config?.enabled">
+  <div [hidden]="!configuration?.position">Position: {{ configuration?.position }}</div>
+  <div [hidden]="!configuration?.nation?.value">Nation: {{ configuration?.nation?.value }}</div>
+  <div [ngSwitch]="configuration?.enabled">
     <span *ngSwitchCase="true">Enabled</span>
     <span *ngSwitchCase="false">Disabled</span>
   </div>
 </div>
-
-<!-- [routerLink]="['/configuration', config.id]" -->

@@ -1,14 +1,16 @@
+import { IIdValueType } from './iid-value-type.model'
+
 export interface IConfiguration {
-        playerid: Number,
+        player: IIdValueType,
         level: String,
         minprice: String,
         maxprice: String,
-        league: Number,
-        teamid: Number,
+        league: IIdValueType,
+        team: IIdValueType,
         position: String,
         isRare: Boolean,
         zone: String,
         buynowprice: String,
         enabled: Boolean,
-        nationid: Number
+        nation: IIdValueType
 }

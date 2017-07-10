@@ -37,17 +37,18 @@ export class CreateConfigurationComponent implements OnInit {
   controlNationList: any[];
   controlPlayerList: any[]
 
+  // Get real data
   players = [
     { firstName: 'Cristiano', lastName: 'Ronaldo', baseId: 1 },
     { firstName: 'Lionel', lastName: 'Messi', baseId: 2 },
     { firstName: 'Luis', lastName: 'Suarez', baseId: 3 }
   ]
 
-  selectedLeague: ILeague;
-  selectedClub: IClub;
+  selectedLeague: IIdValueType;
+  selectedClub: IIdValueType;
   selectedLevel: String;
-  selectedNationId: Number;
-  selectedPlayerId: Number;
+  selectedNation: IIdValueType;
+  selectedPlayer: IIdValueType;
 
   constructor(
     private dataService: DataListsService,
@@ -73,7 +74,7 @@ export class CreateConfigurationComponent implements OnInit {
 
   ngOnInit() {
 
-    this.controlPlayerList = this.players.map(x => { return { id: x.baseId, text: (x.firstName + '' + x.lastName).trim() } });
+    this.controlPlayerList = this.players.map(x => { return { id: x.baseId, text: (x.firstName + ' ' + x.lastName).trim() } });
     this.controlPlayerList.unshift({ id: -1, text: 'All' });
 
     this.dataService.getNations()
@@ -92,16 +93,16 @@ export class CreateConfigurationComponent implements OnInit {
 
   save(values) {
     let newConfiguration: IConfiguration = {
-      playerid: this.selectedPlayerId,
+      player: this.selectedPlayer,
       buynowprice: '',
       enabled: true,
       isRare: false,
-      league: this.selectedLeague != null ? this.selectedLeague.id : 0,
+      league: this.selectedLeague,
       level: this.selectedLevel,
-      teamid: this.selectedClub != null ? this.selectedClub.id : 0,
+      team: this.selectedClub,
       maxprice: values.maxPrice,
       minprice: values.minPrice,
-      nationid: this.selectedNationId,
+      nation: this.selectedNation,
       position: '',
       zone: ''
     };
@@ -118,9 +119,11 @@ export class CreateConfigurationComponent implements OnInit {
   }
 
   onChangeLeague(newLeague) {
+    this.selectedLeague = this.getIdValue(newLeague);
+
     if (newLeague.id !== -1) {
-      this.selectedLeague = this.leagues.find(x => x.id === newLeague.id);
-      this.clubs = this.selectedLeague.clubs;
+      let selected = this.leagues.find(x => x.id === newLeague.id);
+      this.clubs = selected.clubs;
 
       this.controlClubsList = this.clubs.map(x => { return { id: x.id, text: x.name }; });
       this.controlClubsList.unshift({ id: -1, text: 'All' });
@@ -132,12 +135,7 @@ export class CreateConfigurationComponent implements OnInit {
   }
 
   onChangeClub(newClub) {
-    if (newClub.id !== -1) {
-      this.selectedClub = this.clubs.find(x => x.id === newClub.id)
-    }
-    else {
-      this.selectedClub = null;
-    }
+    this.selectedClub = this.getIdValue(newClub);
   }
 
   onChangeLevel(newLevel) {
@@ -145,10 +143,14 @@ export class CreateConfigurationComponent implements OnInit {
   }
 
   onChangeNation(newNation) {
-    this.selectedNationId = newNation.id;
+    this.selectedNation = this.getIdValue(newNation);
   }
 
-  onChangeplayer(newPlayer) {
-    this.selectedPlayerId = newPlayer.id;
+  onChangePlayer(newPlayer) {
+      this.selectedPlayer = this.getIdValue(newPlayer);
+  }
+
+  private getIdValue(item): IIdValueType {
+    return item.id !== -1 ? { id: item.id, value: item.text } : null;
   }
 }

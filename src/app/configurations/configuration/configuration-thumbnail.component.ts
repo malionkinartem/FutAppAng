@@ -10,7 +10,7 @@ import { IConfiguration } from '../shared/index';
 })
 
 export class ConfigurationThumbnailComponent implements OnInit {
-  @Input() config: IConfiguration;
+  @Input() configuration: IConfiguration;
 
   constructor() { }
 

@@ -2,19 +2,20 @@ var BaseRepository = require('./base-repository');
 
 function Configuration() {
     const collectionName = 'configurations';
+    var idValueType = { id: Number, value: String };
     var schema = {
-        playerid: String,
+        player: idValueType,
         level: String,
         minprice: String,
         maxprice: String,
-        league: String,
-        teamid: String,
+        league: idValueType,
+        team: idValueType,
         position: String,
         isRare: Boolean,
         zone: String,
         buynowprice: String,
         enabled: Boolean,
-        nationid: String
+        nation: idValueType
     };
 
     BaseRepository.apply(this, [schema, collectionName]);
