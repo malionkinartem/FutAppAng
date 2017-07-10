@@ -2,6 +2,7 @@ var axios = require('axios')
 var config = require('../config')
 var configRepo = require('../repositories/data-lists-repository')
 var leaguesRepo = require('../repositories/leagues-repository')
+var plaersRepo = require('../repositories/players-repository')
 
 function DataListsProcessor(){
     this.update = async function(){
@@ -12,10 +13,14 @@ function DataListsProcessor(){
 
         var dataArr = await getPlayersData();
 
+        await plaersRepo.deleteAll();
+
         var iteration = 0;
         dataArr.forEach(function(playersDataPage){
             console.log("iteration " + iteration);
             populatePlayersData(playersDataPage.items, data);
+
+            await plaersRepo.saveMany(playersDataPage.items);
             iteration++;
         });
 

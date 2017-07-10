@@ -1,4 +1,4 @@
-var GenericRepository = require('./generic-repository');
+var BaseRepository = require('./base-repository');
 
 function LeaguesRepository() {
     const collectionName = "leagues";
@@ -9,7 +9,7 @@ function LeaguesRepository() {
         clubs: Array
     }
 
-    GenericRepository.apply(this, [schema, collectionName]);
+    BaseRepository.apply(this, [schema, collectionName]);
 }
 
 var leagRepo = new LeaguesRepository();

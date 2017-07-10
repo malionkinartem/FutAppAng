@@ -5,7 +5,7 @@ mongoose.connect(config.databaseUrl);
 var db = mongoose.connection;
 mongoose.set('debug', true)
 
-var Repo = function GenericRepository(modelSchema, collectionName) {
+var Repo = function BaseRepository(modelSchema, collectionName) {
 
     this.configurationSchema = mongoose.Schema(modelSchema);
     this.model = mongoose.model(collectionName , this.configurationSchema);

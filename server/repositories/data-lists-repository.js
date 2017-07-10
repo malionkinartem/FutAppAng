@@ -1,4 +1,4 @@
-var GenericRepository = require('./generic-repository');
+var BaseRepository = require('./base-repository');
 
 function ConfigurationData() {
     const collectionName = 'datalists';
@@ -9,7 +9,7 @@ function ConfigurationData() {
       shortValue: String
     }
     
-    GenericRepository.apply(this, [schema, collectionName]);
+    BaseRepository.apply(this, [schema, collectionName]);
 }
 
 var confData = new ConfigurationData();

@@ -1,4 +1,4 @@
-var GenericRepository = require('./generic-repository');
+var BaseRepository = require('./base-repository');
 
 function Configuration() {
     const collectionName = 'configurations';
@@ -17,7 +17,7 @@ function Configuration() {
         nationid: String
     };
 
-    GenericRepository.apply(this, [schema, collectionName]);
+    BaseRepository.apply(this, [schema, collectionName]);
 }
 
 var conf = new Configuration();
