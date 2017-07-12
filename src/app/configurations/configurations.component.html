@@ -1,9 +1,10 @@
 <div>
   <h1>Search Configurations</h1>
-  <a [routerLink]="['/configurations','new']">New</a>
+  <a [routerLink]="['/configurations','new']" class="btn btn-primary">New</a>
   <div class="row">
     <div class="col-md-5" *ngFor="let config of configurations">
-      <configuration-thumbnail [configuration]="config"></configuration-thumbnail>
+      <configuration-thumbnail [configuration]="config" (delete)="deleteConfiguration(config._id)">
+      </configuration-thumbnail>
     </div>
   </div>
 </div>

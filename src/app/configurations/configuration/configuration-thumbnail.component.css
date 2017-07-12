@@ -8,13 +8,12 @@
     margin-left: 10px;
 }
 .dell div {
-    color: #bbb;
+    color: dimgray;
 }
 .thumbnail {
-    /*min-height: 210
-    px;*/
     padding-left: 20px;
     padding-right: 20px;
+    background-color: #4e5d7c;
 }
 
 .thumbnail:hover {
@@ -24,4 +23,20 @@
 
 a {
     cursor: pointer;
+}
+
+.closeButton{
+    float: right;
+    border-radius: 4px;
+    border: 1 solid darkslategrey;
+    padding: 2px;
+}
+
+.closeButton:hover{
+    background-color: darkslategray;
+    
+}
+
+.closeButton i{
+    color: grey;
 }

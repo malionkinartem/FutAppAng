@@ -1,4 +1,7 @@
-<div class="container thumbnail"> 
+<div class="container thumbnail" [routerLink]="['/configurations', configuration._id]">
+  <div class="closeButton" (click)="onDelete($event)">
+    <i class="glyphicon glyphicon-remove"></i>
+  </div>
   <div [hidden]="!configuration?.player?.value">Player: {{ configuration?.player?.value }}</div>
   <div [hidden]="!configuration?.level">Level: {{ configuration?.level }}</div>
   <div class="row">
@@ -9,7 +12,7 @@
     <div class="col-md-6" [hidden]="!configuration?.league?.value">League: {{ configuration?.league?.value }}</div>
     <div class="col-md-6" [hidden]="!configuration?.team?.value">Team: {{ configuration?.team?.value }}</div>
   </div>
-  
+
   <div [hidden]="!configuration?.position">Position: {{ configuration?.position }}</div>
   <div [hidden]="!configuration?.nation?.value">Nation: {{ configuration?.nation?.value }}</div>
   <div [ngSwitch]="configuration?.enabled">

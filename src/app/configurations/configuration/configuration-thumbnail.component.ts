@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { IConfiguration } from '../shared/index';
 
@@ -11,6 +11,7 @@ import { IConfiguration } from '../shared/index';
 
 export class ConfigurationThumbnailComponent implements OnInit {
   @Input() configuration: IConfiguration;
+  @Output() delete =  new EventEmitter()
 
   constructor() { }
 
@@ -18,4 +19,8 @@ export class ConfigurationThumbnailComponent implements OnInit {
 
   }
 
+  onDelete(event) {
+    this.delete.emit();
+    event.stopPropagation();
+  }
 }

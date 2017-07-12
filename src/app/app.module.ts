@@ -8,9 +8,9 @@ import { ConfigurationsComponent } from './configurations/configurations.compone
 import { ConfigurationThumbnailComponent } from './configurations/configuration/configuration-thumbnail.component';
 import './rxjs-extensions'
 import { appRoutes } from './routes'
-import { CreateConfigurationComponent } 
-       from './configurations/create-configuration/create-configuration.component'
-import { ConfigurationsService, DataListsService } from './configurations/shared/index'
+import { ConfigurationEditComponent } 
+       from './configurations/configuration/configuration-edit.component'
+import { ConfigurationsService, DataListsService, PlayersService } from './configurations/shared/index'
 import { SelectModule } from 'ng2-select'
 
 
@@ -19,7 +19,7 @@ import { SelectModule } from 'ng2-select'
     AppComponent,
     ConfigurationsComponent,
     ConfigurationThumbnailComponent,
-    CreateConfigurationComponent
+    ConfigurationEditComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +31,8 @@ import { SelectModule } from 'ng2-select'
   ],
   providers: [
     ConfigurationsService,
-    DataListsService
+    DataListsService,
+    PlayersService
   ],
   bootstrap: [AppComponent]
 })

@@ -21,4 +21,10 @@ export class ConfigurationsComponent implements OnInit {
     })
   }
 
+  deleteConfiguration(id){
+    this.configService.delete(id)
+      .then( x=>{
+        this.configurations = this.configurations.filter(x=>x._id !== id);
+      });
+  }
 }
