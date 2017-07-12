@@ -23,9 +23,14 @@ router.get('/leagues', leaguesRoute.get);
 // Configurations
 router.get('/configurations', configurationsRoute.get);
 router.post('/configurations', configurationsRoute.save);
+router.delete('/configurations/:_id', configurationsRoute.delete);
+router.get('/configurations/:_id', configurationsRoute.get);
+router.put('/configurations/:_id', configurationsRoute.update)
 
 // Players
 router.get('/players', playersRoute.get);
+router.get('/players/:id', playersRoute.get);
+router.get('/players/name/:filter', playersRoute.getByName);
 
 router.get('/configurationdata/process', (req, res) => {
   dataProcessor.update()

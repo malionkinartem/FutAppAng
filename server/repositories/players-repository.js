@@ -7,10 +7,16 @@ function PlayerRepository() {
         lastName: String,
         fullName: String,
         baseId: Number,
-        id: Number
+        id: Number,
+        rating: Number
     }
 
     BaseRepository.apply(this, [schema, collectionName]);
+
+    this.getFilteredByName = async function (filter) {
+        await this.baseAction();
+        return await this.model.find({ "fullName": new RegExp(filter, "i") });
+    }
 }
 
 var repo = new PlayerRepository();

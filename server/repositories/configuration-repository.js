@@ -15,7 +15,8 @@ function Configuration() {
         zone: String,
         buynowprice: String,
         enabled: Boolean,
-        nation: idValueType
+        nation: idValueType,
+        id: String
     };
 
     BaseRepository.apply(this, [schema, collectionName]);

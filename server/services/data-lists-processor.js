@@ -36,6 +36,7 @@ function DataListsProcessor(){
         playersList.forEach(function(player) {
 
             var teamRelation = getTeamRelationData(player);
+            player.fullName = player.firstName + ' ' + player.lastName;
 
             if(!processedData.genericLists.find(x=> x.id === teamRelation.nation.id + teamRelation.nation.type)){
                 processedData.genericLists.push({id: teamRelation.nation.id + teamRelation.nation.type, value: teamRelation.nation})
@@ -72,7 +73,7 @@ function DataListsProcessor(){
             array.push(pageData);
             
             i++;
-        } while (i - 1 < pageData.totalPages);
+        } while (i - 1 < /*pageData.totalPages */1);
 
         return array;
     }

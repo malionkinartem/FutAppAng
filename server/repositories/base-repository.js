@@ -8,25 +8,26 @@ mongoose.set('debug', true)
 var Repo = function BaseRepository(modelSchema, collectionName) {
 
     this.configurationSchema = mongoose.Schema(modelSchema);
-    this.model = mongoose.model(collectionName , this.configurationSchema);
+    this.model = mongoose.model(collectionName, this.configurationSchema);
 
-    this.get = async function(query){
-        var self = this;
-        
-        if(db._hasOpened){
-            return await self.model.find(query);
-        }
-        else{
+    this.get = async function (query, limit) {
+
+        if (!db._hasOpened) {
             await db.once('open');
-            return await self.model.find(query);
         }
+
+        if (limit) {
+            return await this.model.find(query).limit(limit);
+        }
+
+        return await this.model.find(query);
     }
 
-    this.add = async function(data){
+    this.add = async function (data) {
         var self = this;
         var obj = new self.model(data);
 
-        if(db._hasOpened){            
+        if (db._hasOpened) {
             await obj.save();
         }
         else {
@@ -34,26 +35,44 @@ var Repo = function BaseRepository(modelSchema, collectionName) {
             await obj.save();
         }
     }
-    
-    this.deleteAll = async function(){
+
+    this.deleteAll = async function () {
         var self = this;
-        if(db._hasOpened){
+        if (db._hasOpened) {
             await this.model.deleteMany({});
         }
-        else{
+        else {
             await db.once('open');
-            await self.model.deleteMany({}); 
+            await self.model.deleteMany({});
         }
     }
 
-    this.saveMany = async function(list){
+    this.saveMany = async function (list) {
         var self = this;
-        if(db._hasOpened){
+        if (db._hasOpened) {
             await this.model.insertMany(list);
         }
-        else{
+        else {
             await db.once('open');
             await self.model.insertMany(list);
+        }
+    }
+
+    this.delete = async function (query) {
+        await this.baseAction();
+
+        return await this.model.remove(query);
+    }
+
+    this.update = async function (id, model) {
+        await this.baseAction();
+
+        return await this.model.update({ "_id": id }, model);
+    }
+
+    this.baseAction = async function () {
+        if (!db._hasOpened) {
+            await db.once('open');
         }
     }
 }
