@@ -21,7 +21,7 @@ import { NavComponent } from './nav/nav.component';
     ConfigurationsComponent,
     ConfigurationThumbnailComponent,
     ConfigurationEditComponent,
-    NavComponent
+    NavComponent 
   ],
   imports: [
     BrowserModule,
