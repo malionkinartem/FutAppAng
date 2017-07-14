@@ -1,0 +1,14 @@
+li>a.active {
+    color: antiquewhite
+}
+.nav.navbar-nav {
+    font-size: 15px;
+}
+#searchForm {
+    margin-right: 10px;
+}
+@media (max-width: 1200px) {
+    #searchForm {
+        display: none;
+    }
+}

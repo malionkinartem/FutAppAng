@@ -11,7 +11,8 @@ import { appRoutes } from './routes'
 import { ConfigurationEditComponent } 
        from './configurations/configuration/configuration-edit.component'
 import { ConfigurationsService, DataListsService, PlayersService } from './configurations/shared/index'
-import { SelectModule } from 'ng2-select'
+import { SelectModule } from 'ng2-select';
+import { NavComponent } from './nav/nav.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { SelectModule } from 'ng2-select'
     AppComponent,
     ConfigurationsComponent,
     ConfigurationThumbnailComponent,
-    ConfigurationEditComponent
+    ConfigurationEditComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
