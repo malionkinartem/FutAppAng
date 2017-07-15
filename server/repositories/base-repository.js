@@ -11,7 +11,6 @@ var Repo = function BaseRepository(modelSchema, collectionName) {
     this.model = mongoose.model(collectionName, this.configurationSchema);
 
     this.get = async function (query, limit) {
-
         if (!db._hasOpened) {
             await db.once('open');
         }

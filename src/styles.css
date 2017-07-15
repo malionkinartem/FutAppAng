@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-  background-color: #4e5d7c;
+  /*background-color: //#4e5d7c;*/
+  background-color: lightslategrey;
   color:#bac6db;
   font-weight:bold;
 }

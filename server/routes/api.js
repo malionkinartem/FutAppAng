@@ -8,6 +8,7 @@ var dataListsRoute = require('./data-lists')
 var leaguesRoute = require('./leagues')
 var configurationsRoute = require('./configurations')
 var playersRoute = require('./players')
+var usersRoute = require('./users')
 
 /* Home Api */
 router.get('/', (req, res) => {
@@ -31,6 +32,13 @@ router.put('/configurations/:_id', configurationsRoute.update)
 router.get('/players', playersRoute.get);
 router.get('/players/:id', playersRoute.get);
 router.get('/players/name/:filter', playersRoute.getByName);
+
+// Users
+router.get('/users', usersRoute.get);
+router.get('/users/:_id', usersRoute.get);
+router.post('/users/login', usersRoute.login);
+// router.put('/users', usersRoute.update);
+// router.post('/users', usersRoute.add);
 
 router.get('/configurationdata/process', (req, res) => {
   dataProcessor.update()

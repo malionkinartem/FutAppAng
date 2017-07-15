@@ -1,7 +1,7 @@
 <div class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a [routerLink]="/" class="navbar-brand">FutCM</a>
+      <a [routerLink]="['/']" class="navbar-brand">FutCM</a>
     </div>
 
     <div class="collapse navbar-collapse">
@@ -14,12 +14,25 @@
         </li>
       </ul>
       <div class="navbar-header navbar-right">
+        Is logged in {{auth.isLoggedIn()}}
         <ul class="nav navbar-nav">
+          <li *ngIf="!auth.isLoggedIn()">
+            <a [routerLink]="['user/login']">Login</a>
+          </li>
+          <li *ngIf="!auth.isLoggedIn()">
+            <a [routerLink]="['user/register']">Sign up</a>
+          </li>
           <li>
-            <!--<a *ngIf="!auth.isAuthenticated()" [routerLink]="['user/login']">Login</a>-->
-            <!--<a *ngIf="auth.isAuthenticated()" [routerLink]="['user','profile']">Welcome {{auth.currentUser.firstName}}</a>-->
+            <a *ngIf="auth.isLoggedIn()" [routerLink]="['user','profile']">{{auth.user.firstname}} {{auth.user.lastname}}</a>
           </li>
         </ul>
-      </div>      
+        <button type="button" modal-trigger="searchResults">click me</button>
+      </div>
+    </div>
   </div>
-</div>
+
+  <simple-modal closeOnBodyClick="true" elementId="searchResults" title="Matching Sessions">
+    <div class="list-group">
+      Test Modal
+    </div>
+  </simple-modal>
