@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../user/shared/index'
+import { SimpleModalComponent } from '../common/simple-modal/simple-modal.component'
 
 @Component({
   selector: 'nav-bar',
@@ -7,10 +8,14 @@ import { AuthService } from '../user/shared/index'
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
+  @ViewChild(SimpleModalComponent) modal: SimpleModalComponent;
 
   constructor(private auth: AuthService) { }
 
   ngOnInit() {
   }
 
+  closeLoginModal(){
+    this.modal.closeModal();
+  }
 }

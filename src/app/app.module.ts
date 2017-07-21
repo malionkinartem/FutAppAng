@@ -4,16 +4,18 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-import { ConfigurationsComponent } from './configurations/configurations.component';
-import { ConfigurationThumbnailComponent } from './configurations/configuration/configuration-thumbnail.component';
+import {
+  ConfigurationsComponent, ConfigurationThumbnailComponent, ConfigurationEditComponent,
+  ConfigurationsService, DataListsService, PlayersService
+} from './configurations/index';
 import './rxjs-extensions'
 import { appRoutes } from './routes'
-import { ConfigurationEditComponent } 
-       from './configurations/configuration/configuration-edit.component'
-import { ConfigurationsService, DataListsService, PlayersService } from './configurations/shared/index'
 import { SelectModule } from 'ng2-select';
 import { NavComponent } from './nav/nav.component';
-
+import { AuthService, AuthGuard } from './user/shared/index';
+import { LoginComponent } from './user/login/login.component'
+import { SimpleModalComponent, ModalTriggerDirective } from './common/index';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,11 @@ import { NavComponent } from './nav/nav.component';
     ConfigurationsComponent,
     ConfigurationThumbnailComponent,
     ConfigurationEditComponent,
-    NavComponent 
+    NavComponent,
+    SimpleModalComponent,
+    ModalTriggerDirective,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +40,9 @@ import { NavComponent } from './nav/nav.component';
   providers: [
     ConfigurationsService,
     DataListsService,
-    PlayersService
+    PlayersService,
+    AuthService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

@@ -1,17 +1,25 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Http, RequestOptions, Headers, Response } from '@angular/http';
 import { settings } from '../../config'
 import { IUser } from './iuser'
+import { Router } from '@angular/router'
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnInit {
 
-  private loggedIn = false;
+  ngOnInit(): void {
+    
+  }
+
   private userApi = '/users'
   public user: IUser;
 
-  constructor(private http: Http) {
-    this.loggedIn = !!localStorage.getItem('auth_token');
+  constructor(private http: Http, private router: Router) {
+    let userItem = localStorage.getItem('user_data');
+
+    if(!!userItem){
+      this.user = JSON.parse(userItem);
+    }
   }
 
   login(username, password) {
@@ -19,20 +27,20 @@ export class AuthService {
       .map((res: Response) => res.json())
       .map(res => {
         if (res.isSuccess) {
-          localStorage.setItem("auth_token", res.token);
-          this.loggedIn = true;
+          localStorage.setItem("user_data", JSON.stringify(res.user));
           this.user = <IUser>res.user;
         }
       });
   }
 
   isLoggedIn() {
-    return this.loggedIn;
+    return !!this.user;
   }
 
   logout() {
-    localStorage.removeItem('auth_token');
-    this.loggedIn = false;
+    this.user = null;
+    localStorage.removeItem('user_data');
+    this.router.navigate(['home']);
   }
 
   private getOptions() {

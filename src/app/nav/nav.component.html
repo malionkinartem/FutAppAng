@@ -14,10 +14,9 @@
         </li>
       </ul>
       <div class="navbar-header navbar-right">
-        Is logged in {{auth.isLoggedIn()}}
         <ul class="nav navbar-nav">
           <li *ngIf="!auth.isLoggedIn()">
-            <a [routerLink]="['user/login']">Login</a>
+            <a href="javascript:void(0);" modal-trigger="loginForm">Login</a>
           </li>
           <li *ngIf="!auth.isLoggedIn()">
             <a [routerLink]="['user/register']">Sign up</a>
@@ -25,14 +24,15 @@
           <li>
             <a *ngIf="auth.isLoggedIn()" [routerLink]="['user','profile']">{{auth.user.firstname}} {{auth.user.lastname}}</a>
           </li>
+          <li>
+            <a *ngIf="auth.isLoggedIn()" href="javascript:void(0);" (click)="auth.logout()">Logout</a>
+          </li>
         </ul>
-        <button type="button" modal-trigger="searchResults">click me</button>
       </div>
     </div>
   </div>
+</div>
 
-  <simple-modal closeOnBodyClick="true" elementId="searchResults" title="Matching Sessions">
-    <div class="list-group">
-      Test Modal
-    </div>
-  </simple-modal>
+<simple-modal closeOnBodyClick="true" elementId="loginForm" title="Login">
+  <login (onCanceled)="closeLoginModal($event)" (onLoggedIn)="closeLoginModal($event)"></login>
+</simple-modal>
