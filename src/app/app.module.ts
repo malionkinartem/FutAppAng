@@ -13,9 +13,10 @@ import { appRoutes } from './routes'
 import { SelectModule } from 'ng2-select';
 import { NavComponent } from './nav/nav.component';
 import { AuthService, AuthGuard } from './user/shared/index';
-import { LoginComponent } from './user/login/login.component'
+// import { LoginComponent } from './user/login/login.component'
 import { SimpleModalComponent, ModalTriggerDirective } from './common/index';
 import { HomeComponent } from './home/home.component';
+import { LoadingComponent } from './common/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -26,8 +27,9 @@ import { HomeComponent } from './home/home.component';
     NavComponent,
     SimpleModalComponent,
     ModalTriggerDirective,
-    LoginComponent,
-    HomeComponent
+    // LoginComponent,
+    HomeComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

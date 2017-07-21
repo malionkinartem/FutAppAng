@@ -4,7 +4,8 @@ import { LoginComponent } from './login/login.component'
 import { AuthService } from './shared/auth.service'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
-import { userRoutes } from './routes'
+import { userRoutes } from './routes';
+import { ProfileComponent } from './profile/profile.component'
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { userRoutes } from './routes'
     AuthService
   ],
   declarations: [
-    LoginComponent
+    LoginComponent,
+    ProfileComponent
   ]
 })
 

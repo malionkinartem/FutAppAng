@@ -28,6 +28,10 @@ export class ConfigurationEditComponent implements OnInit {
   minPrice: FormControl;
   maxPrice: FormControl;
 
+  isUserReady: Boolean = false;
+  isNotAsyncReady: Boolean = false;
+  isNew: Boolean = false;
+
   controlLeaguesList: any[];
   controlClubsList: any[];
   controlLevelList = [
@@ -43,8 +47,6 @@ export class ConfigurationEditComponent implements OnInit {
   activeLeagueList: any[];
   activeClubList: any[];
   activeLevelList: any[]
-
-  isNew: Boolean = true;
 
   constructor(
     private dataService: DataListsService,
@@ -84,7 +86,11 @@ export class ConfigurationEditComponent implements OnInit {
                   this.mapPlayersList(players, false);
                   let player = players[0];
                   this.activePlayerList = [this.controlPlayerList.find(x => x.id === player.id)];
+                  this.isUserReady = true;
                 });
+            }
+            else {
+              this.isUserReady = true;
             }
 
             if (this.configuration.nation) {
@@ -103,18 +109,23 @@ export class ConfigurationEditComponent implements OnInit {
                 this.activeLevelList = [this.controlLevelList.find(x => x.text === this.configuration.level)]
               }
 
-              if(this.configuration.minprice){
+              if (this.configuration.minprice) {
                 this.minPrice.setValue(this.configuration.minprice);;
               }
 
-              if(this.configuration.maxprice){
+              if (this.configuration.maxprice) {
                 this.maxPrice.setValue(this.configuration.maxprice);;
               }
             }
 
             this.isNew = false;
+            this.isNotAsyncReady = true;
           });
       }
+      else {
+        this.isNew = true;
+      }
+
     });
   }
 
@@ -180,6 +191,10 @@ export class ConfigurationEditComponent implements OnInit {
       .subscribe(items => {
         this.mapPlayersList(items);
       });
+  }
+
+  isReady() {
+    return this.isNew || this.isUserReady && this.isNotAsyncReady;
   }
 
   private initConfiguration() {

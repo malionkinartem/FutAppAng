@@ -1,6 +1,6 @@
 <h4>Create New Configuration</h4>
 
-<form [formGroup]="newConfigurationForm" (ngSubmit)="save(newConfigurationForm.value)" class="col-md-6">
+<form [hidden]="!isReady()" [formGroup]="newConfigurationForm" (ngSubmit)="save(newConfigurationForm.value)" class="col-md-6">
   <div class="form-group">
     <label for="players">Player</label>
     <ng-select 
@@ -52,3 +52,5 @@
     <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
   </div>
 </form>
+
+<loading [hidden]="isReady()"></loading>
