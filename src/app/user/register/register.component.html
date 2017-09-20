@@ -1,0 +1,31 @@
+<form [formGroup]="newuser" (ngSubmit)="save(newuser.value)" class="col-md-6">
+  <div class="form-group" [ngClass]="{'has-error' : !newuser.controls['email'].valid
+  && newuser.controls['email'].touched }">
+    <label for="email">Email:</label>
+    <input class="form-control" type="text" formControlName="email" />
+  </div>
+  <div class="form-group" [ngClass]="{'has-error' : !newuser.controls['firstname'].valid
+  && newuser.controls['firstname'].touched }">
+    <label for="firstname">First Name:</label>
+    <input class="form-control" type="text" formControlName="firstname" />
+  </div>
+  <div class="form-group" [ngClass]="{'has-error' : !newuser.controls['lastname'].valid
+  && newuser.controls['lastname'].touched }">
+    <label for="lastname">Last Name:</label>
+    <input class="form-control" type="text" formControlName="lastname" />
+  </div>
+  <div class="form-group" [ngClass]="{'has-error' : !newuser.controls['password'].valid
+  && newuser.controls['password'].touched }">
+    <label for="password">Password:</label>
+    <input class="form-control" type="password" formControlName="password" />
+  </div>
+  <div class="form-group" [ngClass]="{'has-error' : !newuser.controls['repeatpassword'].valid
+  && newuser.controls['repeatpassword'].touched }">
+    <label for="repeatpassword">Repeat password:</label>
+    <input class="form-control" type="password" formControlName="repeatpassword" equalValidator="password" />
+  </div>
+  
+  <!-- {{JSON.stringify(newuser)}} -->
+  <button [disabled]="!newuser.valid" type="submit" class="btn btn-primary">Save</button>
+  <button  (click)="cancel(newuser)" class="btn btn-default">Cancel</button>
+</form>

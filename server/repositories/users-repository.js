@@ -6,14 +6,11 @@ function UserRepository() {
         firstname: String,
         lastname: String,
         username: String,
-        password: String
+        password: String,
+        agents: String
     }
 
     BaseRepository.apply(this, [schema, collectionName]);
-
-    this.getByUserName = function(userName){
-        this.get
-    }
 }
 
 var repo = new UserRepository();

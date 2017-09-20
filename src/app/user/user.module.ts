@@ -1,25 +1,31 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component'
-import { AuthService } from './shared/auth.service'
+import { SharedModule } from '../shared/shared.module'
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 import { userRoutes } from './routes';
 import { ProfileComponent } from './profile/profile.component'
+import { AgentListComponent, CreateEditComponent, AuthService, UserService } from './index';
+import { RegisterComponent } from './register/register.component'
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     RouterModule.forChild(userRoutes)
   ],
   providers: [
-    AuthService
+    AuthService,
+    UserService
   ],
   declarations: [
-    LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    AgentListComponent,
+    CreateEditComponent,
+    RegisterComponent
   ]
 })
 

@@ -9,6 +9,7 @@ var leaguesRoute = require('./leagues')
 var configurationsRoute = require('./configurations')
 var playersRoute = require('./players')
 var usersRoute = require('./users')
+var transferingRoute = require('./transferring')
 
 /* Home Api */
 router.get('/', (req, res) => {
@@ -37,7 +38,7 @@ router.get('/players/name/:filter', playersRoute.getByName);
 router.get('/users', usersRoute.get);
 router.get('/users/:_id', usersRoute.get);
 router.post('/users/login', usersRoute.login);
-// router.put('/users', usersRoute.update);
+router.post('/users', usersRoute.add);
 // router.post('/users', usersRoute.add);
 
 router.get('/configurationdata/process', (req, res) => {
@@ -49,5 +50,8 @@ router.get('/configurationdata/process', (req, res) => {
       res.status(500).send(error);
     })
 })
+
+// start transfering
+router.post('/transferring/start', transferingRoute.start);
 
 module.exports = router;

@@ -30,6 +30,8 @@ export class AuthService implements OnInit {
           localStorage.setItem("user_data", JSON.stringify(res.user));
           this.user = <IUser>res.user;
         }
+
+        return res.isSuccess;
       });
   }
 

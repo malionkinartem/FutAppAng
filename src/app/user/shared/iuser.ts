@@ -1,7 +1,11 @@
+import { IAgent } from './iagent'
+
 export interface IUser {
     username: String,
     firstname: String,
     lastname: String,
-    authToken: String
+    password?: String,
+    authToken?: String,
+    agents?: IAgent[]
 }
 

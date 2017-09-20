@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from './shared/shared.module'
 import {
   ConfigurationsComponent, ConfigurationThumbnailComponent, ConfigurationEditComponent,
   ConfigurationsService, DataListsService, PlayersService
@@ -13,8 +14,6 @@ import { appRoutes } from './routes'
 import { SelectModule } from 'ng2-select';
 import { NavComponent } from './nav/nav.component';
 import { AuthService, AuthGuard } from './user/shared/index';
-// import { LoginComponent } from './user/login/login.component'
-import { SimpleModalComponent, ModalTriggerDirective } from './common/index';
 import { HomeComponent } from './home/home.component';
 import { LoadingComponent } from './common/loading/loading.component';
 
@@ -25,9 +24,6 @@ import { LoadingComponent } from './common/loading/loading.component';
     ConfigurationThumbnailComponent,
     ConfigurationEditComponent,
     NavComponent,
-    SimpleModalComponent,
-    ModalTriggerDirective,
-    // LoginComponent,
     HomeComponent,
     LoadingComponent
   ],
@@ -37,7 +33,8 @@ import { LoadingComponent } from './common/loading/loading.component';
     HttpModule,
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule,
-    SelectModule
+    SelectModule,
+    SharedModule
   ],
   providers: [
     ConfigurationsService,

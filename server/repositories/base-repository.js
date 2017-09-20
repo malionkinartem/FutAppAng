@@ -27,11 +27,11 @@ var Repo = function BaseRepository(modelSchema, collectionName) {
         var obj = new self.model(data);
 
         if (db._hasOpened) {
-            await obj.save();
+            return await obj.save();
         }
         else {
             await db.once('open');
-            await obj.save();
+            return await obj.save();
         }
     }
 
