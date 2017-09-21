@@ -4,7 +4,7 @@ import { IConfiguration } from '../shared/index';
 
 
 @Component({
-  selector: 'configuration-thumbnail',
+  selector: 'fut-configuration-thumbnail',
   templateUrl: './configuration-thumbnail.component.html',
   styleUrls: ['./configuration-thumbnail.component.css']
 })

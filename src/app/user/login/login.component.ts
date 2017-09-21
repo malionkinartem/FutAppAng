@@ -4,7 +4,7 @@ import { AuthService } from '../shared/auth.service'
 import { Router } from '@angular/router'
 
 @Component({
-  selector: 'login',
+  selector: 'fut-user-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -37,9 +37,8 @@ export class LoginComponent implements OnInit {
         .subscribe(x => {
           if (this.authService.isLoggedIn()) {
             this.onLoggedIn.emit();
-          }
-          else {
-            this.validationMessage = "User name or password is invalid."
+          } else {
+            this.validationMessage = 'User name or password is invalid.'
           }
         });
     }

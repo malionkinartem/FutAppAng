@@ -7,7 +7,7 @@ import {
 import { UserService, IUser, AuthService } from '../index'
 
 @Component({
-  selector: 'app-register',
+  selector: 'fut-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
   }
 
   public save(values) {
-    let newuser: IUser = {
+    const newuser: IUser = {
       firstname: values.firstname,
       lastname: values.lastname,
       username: values.email,
@@ -39,10 +39,9 @@ export class RegisterComponent implements OnInit {
     this.userService.create(newuser)
       .subscribe((user: IUser) => {
         if (user !== undefined) {
-          debugger;
+
           this.auth.login(user.username, newuser.password).subscribe(success => {
-            debugger
-            if(success){
+            if (success) {
               this.router.navigate(['/']);
             }
           });
@@ -51,7 +50,6 @@ export class RegisterComponent implements OnInit {
   }
 
   public cancel(data) {
-    debugger;
     this.router.navigate(['/']);
   }
 }

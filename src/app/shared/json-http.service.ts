@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http'
-import { Observable } from 'rxjs'
+import { Observable } from 'rxjs/Observable'
 import { IResponse, INoDataResponse } from './iresponse'
 
 @Injectable()
@@ -33,7 +33,7 @@ export class JsonHttpService {
   }
 
   private getOptions() {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
+    const headers = new Headers({ 'Content-Type': 'application/json' });
     return new RequestOptions({ headers: headers });
   }
 

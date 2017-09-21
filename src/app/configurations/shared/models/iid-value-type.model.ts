@@ -1,4 +1,4 @@
-export interface IIdValueType{
+export interface IIdValueType {
     id: Number,
     value: String
 }

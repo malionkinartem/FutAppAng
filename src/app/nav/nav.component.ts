@@ -3,7 +3,7 @@ import { AuthService } from '../user/shared/index'
 import { SimpleModalComponent } from '../common/simple-modal/simple-modal.component'
 
 @Component({
-  selector: 'nav-bar',
+  selector: 'fut-nav-bar',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
@@ -15,7 +15,7 @@ export class NavComponent implements OnInit {
   ngOnInit() {
   }
 
-  closeLoginModal(){
+  closeLoginModal() {
     this.modal.closeModal();
   }
 }

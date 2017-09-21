@@ -22,7 +22,7 @@
   <div class="form-group" [ngClass]="{'has-error' : !newuser.controls['repeatpassword'].valid
   && newuser.controls['repeatpassword'].touched }">
     <label for="repeatpassword">Repeat password:</label>
-    <input class="form-control" type="password" formControlName="repeatpassword" equalValidator="password" />
+    <input class="form-control" type="password" formControlName="repeatpassword" futEqualValidator="password" />
   </div>
   
   <!-- {{JSON.stringify(newuser)}} -->

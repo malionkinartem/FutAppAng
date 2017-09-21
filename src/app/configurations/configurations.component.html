@@ -3,8 +3,8 @@
   <a [routerLink]="['/configurations','new']" class="btn btn-primary">New</a>
   <div class="row">
     <div class="col-md-5" *ngFor="let config of configurations">
-      <configuration-thumbnail [configuration]="config" (delete)="deleteConfiguration(config._id)">
-      </configuration-thumbnail>
+      <fut-configuration-thumbnail [configuration]="config" (delete)="deleteConfiguration(config._id)">
+      </fut-configuration-thumbnail>
     </div>
   </div>
 </div>

@@ -1,16 +1,14 @@
-import { Directive, OnInit, Inject, ElementRef, Input } from '@angular/core'
+import { Directive, OnInit, Inject, ElementRef, Input, Attribute } from '@angular/core'
 import * as $ from 'jquery'
 
 @Directive({
-    selector: '[modal-trigger]'
+    selector: '[futModalTrigger]'
 })
 
 export class ModalTriggerDirective implements OnInit {
-    @Input('modal-trigger') modalId: string
-
     private el: HTMLElement
 
-    constructor( el: ElementRef) {
+    constructor( el: ElementRef, @Attribute('futModalTrigger') public modalId: string) {
         this.el = el.nativeElement
     }
 

@@ -16,7 +16,7 @@ export class DataListsService {
   public getNations(): Observable<IIdValueType[]> {
     return this.http.get(settings.apiUrl + '/datalists/type/nation')
       .map((res: Response) => {
-        var nations = <IIdValueType[]>res.json()
+        const nations = <IIdValueType[]> res.json()
 
         return nations.sort((x, y) => x.value > y.value ? 1 : -1);
       });

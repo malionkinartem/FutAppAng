@@ -11,7 +11,7 @@ import {
 
 
 @Component({
-  selector: 'configuration-edit',
+  selector: 'fut-configuration-edit',
   templateUrl: './configuration-edit.component.html',
   styleUrls: ['./configuration-edit.component.css']
 })
@@ -73,56 +73,54 @@ export class ConfigurationEditComponent implements OnInit {
 
     this.initConfiguration();
 
-    this.activatedRoute.params.subscribe(x => {
-      let id = x['id'];
+    this.activatedRoute.params.subscribe(params => {
+      const id = params['id'];
       if (id) {
         this.configurationService.get(id)
-          .subscribe(x => {
-            this.configuration = x[0];
+          .subscribe(conf => {
+            this.configuration = conf[0];
 
             if (this.configuration.player) {
               this.playersService.getPlayer(this.configuration.player.id)
                 .subscribe(players => {
                   this.mapPlayersList(players, false);
-                  let player = players[0];
-                  this.activePlayerList = [this.controlPlayerList.find(x => x.id === player.id)];
+                  const player = players[0];
+                  this.activePlayerList = [this.controlPlayerList.find(p => p.id === player.id)];
                   this.isUserReady = true;
                 });
-            }
-            else {
+            } else {
               this.isUserReady = true;
             }
 
             if (this.configuration.nation) {
-              this.activeNationList = [this.controlNationList.find(x => x.id === this.configuration.nation.id)]
+              this.activeNationList = [this.controlNationList.find(nation => nation.id === this.configuration.nation.id)]
             }
 
             if (this.configuration.league) {
-              this.activeLeagueList = [this.controlLeaguesList.find(x => x.id === this.configuration.league.id)]
+              this.activeLeagueList = [this.controlLeaguesList.find(league => league.id === this.configuration.league.id)]
               this.populateClubs(this.configuration.league.id);
 
               if (this.configuration.team) {
-                this.activeClubList = [this.controlClubsList.find(x => x.id === this.configuration.team.id)];
+                this.activeClubList = [this.controlClubsList.find(club => club.id === this.configuration.team.id)];
               }
 
               if (this.configuration.level) {
-                this.activeLevelList = [this.controlLevelList.find(x => x.text === this.configuration.level)]
+                this.activeLevelList = [this.controlLevelList.find(level => level.text === this.configuration.level)]
               }
 
               if (this.configuration.minprice) {
-                this.minPrice.setValue(this.configuration.minprice);;
+                this.minPrice.setValue(this.configuration.minprice);
               }
 
               if (this.configuration.maxprice) {
-                this.maxPrice.setValue(this.configuration.maxprice);;
+                this.maxPrice.setValue(this.configuration.maxprice);
               }
             }
 
             this.isNew = false;
             this.isNotAsyncReady = true;
           });
-      }
-      else {
+      } else {
         this.isNew = true;
       }
 
@@ -139,8 +137,7 @@ export class ConfigurationEditComponent implements OnInit {
           this.router.navigate(['configurations']);
         })
         .catch(x => console.log(x));
-    }
-    else {
+    } else {
       this.configurationService.update(this.configuration)
         .then(() => {
           this.router.navigate(['configurations'])
@@ -158,8 +155,7 @@ export class ConfigurationEditComponent implements OnInit {
 
     if (newLeague.id !== -1) {
       this.populateClubs(newLeague.id);
-    }
-    else {
+    } else {
       this.clubs = null;
       this.controlClubsList = this.controlClubsList.filter(x => x.id === -1);
     }
@@ -212,7 +208,7 @@ export class ConfigurationEditComponent implements OnInit {
 
     this.dataService.getNations()
       .subscribe(data => {
-        this.controlNationList = data.map(x => { return { id: x.id, text: x.value }; });
+        this.controlNationList = data.map(x => ({ id: x.id, text: x.value }));
         this.controlNationList.unshift(this.getSelectDefaultItem());
       });
 
@@ -220,22 +216,22 @@ export class ConfigurationEditComponent implements OnInit {
       .subscribe(data => {
 
         this.leagues = data;
-        this.controlLeaguesList = this.leagues.map(x => { return { id: x.id, text: x.name }; });
+        this.controlLeaguesList = this.leagues.map(x => ({ id: x.id, text: x.name }));
         this.controlLeaguesList.unshift(this.getSelectDefaultItem());
       });
   }
 
   private populateClubs(leagueId) {
-    let league = this.leagues.find(x => x.id === leagueId);
+    const league = this.leagues.find(x => x.id === leagueId);
     this.clubs = league.clubs;
 
-    this.controlClubsList = this.clubs.map(x => { return { id: x.id, text: x.name }; });
+    this.controlClubsList = this.clubs.map(x => ({ id: x.id, text: x.name }));
     this.controlClubsList.unshift(this.getSelectDefaultItem());
   }
 
   private mapPlayersList(items: IPlayer[], addDefault = true) {
     this.controlPlayerList = items
-      .map(x => { return { id: x.id, text: this.getPlayerSelectItemText(x) } });
+      .map(x => ({ id: x.id, text: this.getPlayerSelectItemText(x) }));
 
     if (addDefault) {
       this.controlPlayerList.unshift(this.getSelectDefaultItem());

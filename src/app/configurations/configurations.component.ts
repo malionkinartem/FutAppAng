@@ -5,7 +5,7 @@ import { ConfigurationsService } from '../configurations/shared/configurations.s
 
 
 @Component({
-  selector: 'search-configurations',
+  selector: 'fut-search-configurations',
   templateUrl: './configurations.component.html',
   styleUrls: ['./configurations.component.css']
 })
@@ -21,10 +21,10 @@ export class ConfigurationsComponent implements OnInit {
     })
   }
 
-  deleteConfiguration(id){
+  deleteConfiguration(id) {
     this.configService.delete(id)
-      .then( x=>{
-        this.configurations = this.configurations.filter(x=>x._id !== id);
+      .then(x => {
+        this.configurations = this.configurations.filter(conf => conf._id !== id);
       });
   }
 }

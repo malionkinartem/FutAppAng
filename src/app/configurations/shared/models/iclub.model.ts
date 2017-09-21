@@ -1,4 +1,4 @@
-export interface IClub{
+export interface IClub {
     name: String,
     id: Number,
     ShortName: String

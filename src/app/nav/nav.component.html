@@ -16,7 +16,7 @@
       <div class="navbar-header navbar-right">
         <ul class="nav navbar-nav">
           <li *ngIf="!auth.isLoggedIn()">
-            <a href="javascript:void(0);" modal-trigger="loginForm">Login</a>
+            <a href="javascript:void(0);" futModalTrigger="loginForm">Login</a>
           </li>
           <li *ngIf="!auth.isLoggedIn()">
             <a [routerLink]="['user/register']">Sign up</a>
@@ -33,6 +33,6 @@
   </div>
 </div>
 
-<simple-modal closeOnBodyClick="true" elementId="loginForm" title="Login">
-  <login (onCanceled)="closeLoginModal($event)" (onLoggedIn)="closeLoginModal($event)"></login>
-</simple-modal>
+<fut-simple-modal closeOnBodyClick="true" elementId="loginForm" title="Login">
+  <fut-user-login (onCanceled)="closeLoginModal($event)" (onLoggedIn)="closeLoginModal($event)"></fut-user-login>
+</fut-simple-modal>

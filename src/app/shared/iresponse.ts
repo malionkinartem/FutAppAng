@@ -1,4 +1,4 @@
-export interface IResponse<T> extends INoDataResponse {   
+export interface IResponse<T> extends INoDataResponse {
     data: T
 }
 

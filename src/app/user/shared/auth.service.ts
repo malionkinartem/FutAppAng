@@ -7,17 +7,17 @@ import { Router } from '@angular/router'
 @Injectable()
 export class AuthService implements OnInit {
 
-  ngOnInit(): void {
-    
-  }
-
   private userApi = '/users'
   public user: IUser;
 
-  constructor(private http: Http, private router: Router) {
-    let userItem = localStorage.getItem('user_data');
+  ngOnInit(): void {
 
-    if(!!userItem){
+  }
+
+  constructor(private http: Http, private router: Router) {
+    const userItem = localStorage.getItem('user_data');
+
+    if (!!userItem) {
       this.user = JSON.parse(userItem);
     }
   }
@@ -27,7 +27,7 @@ export class AuthService implements OnInit {
       .map((res: Response) => res.json())
       .map(res => {
         if (res.isSuccess) {
-          localStorage.setItem("user_data", JSON.stringify(res.user));
+          localStorage.setItem('user_data', JSON.stringify(res.user));
           this.user = <IUser>res.user;
         }
 
@@ -46,7 +46,7 @@ export class AuthService implements OnInit {
   }
 
   private getOptions() {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
+    const headers = new Headers({ 'Content-Type': 'application/json' });
     return new RequestOptions({ headers: headers });
   }
 }

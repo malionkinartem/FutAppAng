@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 
 @Component({
-  selector: 'app-profile',
+  selector: 'fut-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })

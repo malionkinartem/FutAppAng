@@ -10,7 +10,7 @@ import { JsonHttpService, IResponse, INoDataResponse } from '../../shared/index'
 export class ConfigurationsService {
 
   private baseApiUrl: string;
-  private url: String = "/configurations"
+  private url: String = '/configurations'
 
   constructor(private http: Http, private jsonHttp: JsonHttpService) {
 
@@ -49,20 +49,19 @@ export class ConfigurationsService {
   }
 
   private extractData(res: Response) {
-    let body = res.json();
+    const body = res.json();
     return body.data || {};
   }
 
   private getOptions() {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
+    const headers = new Headers({ 'Content-Type': 'application/json' });
     return new RequestOptions({ headers: headers });
   }
 
   private handleResponse<T>(response: INoDataResponse, resolve, reject) {
     if (response.isSuccess) {
       resolve();
-    }
-    else {
+    } else {
       reject(response.message);
     }
   }
