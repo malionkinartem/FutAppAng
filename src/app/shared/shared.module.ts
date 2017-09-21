@@ -4,6 +4,7 @@ import { LoginComponent } from '../user/login/login.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SimpleModalComponent, ModalTriggerDirective, EqualValidatorDirective } from '../common/index';
 import { JsonHttpService } from './json-http.service'
+import { HttpModule } from '@angular/http'
 
 @NgModule({
     declarations: [
@@ -14,7 +15,8 @@ import { JsonHttpService } from './json-http.service'
     ],
     imports: [
         CommonModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        HttpModule        
     ],
     providers: [
         JsonHttpService

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { IConfiguration } from '../shared/index';
 import { settings } from '../../config'
@@ -12,7 +11,7 @@ export class ConfigurationsService {
   private baseApiUrl: string;
   private url: String = '/configurations'
 
-  constructor(private http: Http, private jsonHttp: JsonHttpService) {
+  constructor(private jsonHttp: JsonHttpService) {
 
   }
 
@@ -46,17 +45,7 @@ export class ConfigurationsService {
       this.jsonHttp.put(settings.apiUrl + this.url + '/' + configuration._id, configuration)
         .subscribe((response: IResponse<IConfiguration>) => this.handleResponse(response, resolve, reject));
     })
-  }
-
-  private extractData(res: Response) {
-    const body = res.json();
-    return body.data || {};
-  }
-
-  private getOptions() {
-    const headers = new Headers({ 'Content-Type': 'application/json' });
-    return new RequestOptions({ headers: headers });
-  }
+  }  
 
   private handleResponse<T>(response: INoDataResponse, resolve, reject) {
     if (response.isSuccess) {

@@ -14,9 +14,9 @@ export class JsonHttpService {
       .catch(this.hadleError)
   }
 
-  public put<T>(url: string, data: T): Observable<IResponse<T>> {
+  public put<T>(url: string, data: T): Observable<INoDataResponse> {
     return this.http.put(url, data, this.getOptions())
-      .map((res: Response) => this.createResponse(res))
+      .map((res: Response) => this.createNoDataResponse(res))
       .catch(this.hadleError)
   }
 

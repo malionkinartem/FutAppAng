@@ -66,7 +66,7 @@ var Repo = function BaseRepository(modelSchema, collectionName) {
     this.update = async function (id, model) {
         await this.baseAction();
 
-        return await this.model.update({ "_id": id }, model);
+        await this.model.update({ "_id": id }, model);
     }
 
     this.baseAction = async function () {

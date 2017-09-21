@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 import { userRoutes } from './routes';
 import { ProfileComponent } from './profile/profile.component'
-import { AgentListComponent, CreateEditComponent, AuthService, UserService } from './index';
+import { AgentListComponent, CreateEditComponent, UserService } from './index';
 import { RegisterComponent } from './register/register.component'
 
 @NgModule({
@@ -18,7 +18,6 @@ import { RegisterComponent } from './register/register.component'
     RouterModule.forChild(userRoutes)
   ],
   providers: [
-    AuthService,
     UserService
   ],
   declarations: [

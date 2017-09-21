@@ -1,8 +1,9 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Http, RequestOptions, Headers, Response } from '@angular/http';
 import { settings } from '../../config'
 import { IUser } from './iuser'
 import { Router } from '@angular/router'
+import { JsonHttpService } from '../../shared/json-http.service'
+import { Observable } from 'rxjs/Observable'
 
 @Injectable()
 export class AuthService implements OnInit {
@@ -14,21 +15,20 @@ export class AuthService implements OnInit {
 
   }
 
-  constructor(private http: Http, private router: Router) {
+  constructor(private router: Router, private jsonHttp: JsonHttpService) {
     const userItem = localStorage.getItem('user_data');
 
     if (!!userItem) {
-      this.user = JSON.parse(userItem);
+      this.user = JSON.parse(userItem);      
     }
   }
 
   login(username, password) {
-    return this.http.post(settings.apiUrl + this.userApi + '/login', { username, password }, this.getOptions())
-      .map((res: Response) => res.json())
+    return this.jsonHttp.post(settings.apiUrl + this.userApi + '/login', { username, password })
       .map(res => {
         if (res.isSuccess) {
-          localStorage.setItem('user_data', JSON.stringify(res.user));
-          this.user = <IUser>res.user;
+          localStorage.setItem('user_data', JSON.stringify(res.data));
+          this.user = <IUser>res.data;
         }
 
         return res.isSuccess;
@@ -45,8 +45,10 @@ export class AuthService implements OnInit {
     this.router.navigate(['home']);
   }
 
-  private getOptions() {
-    const headers = new Headers({ 'Content-Type': 'application/json' });
-    return new RequestOptions({ headers: headers });
+  updateUserData(updatedUser) {
+    this.user.firstname = updatedUser.firstname;
+    this.user.lastname = updatedUser.lastname;
+    
+    localStorage.setItem('user_data', JSON.stringify(this.user));
   }
 }

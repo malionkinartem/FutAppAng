@@ -1,12 +1,16 @@
-<form #profile (ngSubmit)="save(profile.value)">
+<form [formGroup]="profile" (ngSubmit)="save(profile.value)" class="col-md-6">
+  <div class="form-group">
+    <label for="username">User Name:</label>
+    <span>{{auth.user.username}}</span>
+  </div>
   <div class="form-group">
     <label for="firstname">First Name:</label>
-    <input type="text" formControlName="firstname" />
+    <input type="text" formControlName="firstname" class="form-control" />
   </div>
   <div class="form-group">
     <label for="lastname">Last Name:</label>
-    <input type="text" formControlName="lastname" />
+    <input type="text" formControlName="lastname" class="form-control" />
   </div>
-  <button type="submit">Save</button>
-  <button (click)="cancel()">Cancel</button>
+  <button type="submit" class="btn btn-primary">Save</button>
+  <button (click)="cancel()" class="btn btn-default">Cancel</button>
 </form>

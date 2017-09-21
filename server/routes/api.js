@@ -39,6 +39,7 @@ router.get('/users', usersRoute.get);
 router.get('/users/:_id', usersRoute.get);
 router.post('/users/login', usersRoute.login);
 router.post('/users', usersRoute.add);
+router.put('/users', usersRoute.update);
 // router.post('/users', usersRoute.add);
 
 router.get('/configurationdata/process', (req, res) => {
@@ -55,3 +56,4 @@ router.get('/configurationdata/process', (req, res) => {
 router.post('/transferring/start', transferingRoute.start);
 
 module.exports = router;
+

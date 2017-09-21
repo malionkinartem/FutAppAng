@@ -41,7 +41,7 @@ module.exports.login = (req, res) => {
     var query = { username: req.body.username };
     repository.get(query, 1)
         .then(result => {
-            if (result && result.length > 0 && req.body.password) {            
+            if (result && result.length > 0 && req.body.password) {
 
                 let user = result[0];
                 if (encryption.decrypt(user.password) === req.body.password) {
@@ -71,6 +71,15 @@ module.exports.login = (req, res) => {
         });
 }
 
+module.exports.update = (req, res) => {
+    repository.update(req.body._id, req.body)
+        .then(users => {
+            res.status(200).json();
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        });
+}
 
 
 
