@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from '../user/login/login.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SimpleModalComponent, ModalTriggerDirective, EqualValidatorDirective } from '../common/index';
+import { JsonHttpService } from './json-http.service'
 
 @NgModule({
     declarations: [
@@ -16,7 +17,7 @@ import { SimpleModalComponent, ModalTriggerDirective, EqualValidatorDirective } 
         ReactiveFormsModule
     ],
     providers: [
-
+        JsonHttpService
     ],
     exports: [
         LoginComponent,

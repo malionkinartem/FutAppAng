@@ -3,6 +3,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { IConfiguration } from '../shared/index';
 import { settings } from '../../config'
+import { JsonHttpService, IResponse, INoDataResponse } from '../../shared/index'
 
 
 @Injectable()
@@ -11,71 +12,40 @@ export class ConfigurationsService {
   private baseApiUrl: string;
   private url: String = "/configurations"
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private jsonHttp: JsonHttpService) {
 
   }
 
   public getConfigurations(): Observable<IConfiguration[]> {
-    return this.http.get(settings.apiUrl + this.url)
-      .map((response: Response) => response.json())
-      .catch(this.hadleError)
+    return this.jsonHttp.get<IConfiguration[]>(settings.apiUrl + this.url)
+      .map(response => response.data);
   }
 
   public save(configuration: IConfiguration) {
-    let options = this.getOptions();
 
     return new Promise((resolve, reject) => {
-      this.http.post(settings.apiUrl + this.url, configuration, options)
-        .subscribe(x => {
-          if (x.status === 200) {
-            resolve();
-          }
-          else {
-            reject(x.statusText);
-          }
-        })
+      this.jsonHttp.post(settings.apiUrl + this.url, configuration)
+        .subscribe(response => this.handleResponse(response, resolve, reject))
     });
   }
 
   public get(id): Observable<IConfiguration> {
-    return this.http.get(settings.apiUrl + this.url + '/' + id)
-      .map(res => res.json())
-      .catch(this.hadleError);
+    return this.jsonHttp.get(settings.apiUrl + this.url + '/' + id)
+      .map(response => response.data);
   }
 
   public delete(id) {
-    let options = this.getOptions();
-
     return new Promise((resolve, reject) => {
-      this.http.delete(settings.apiUrl + this.url + '/' + id, options)
-        .subscribe(x => {
-          if (x.status === 200) {
-            resolve();
-          }
-          else {
-            reject(x.statusText);
-          }
-        });
+      this.jsonHttp.delete(settings.apiUrl + this.url + '/' + id)
+        .subscribe(response => this.handleResponse(response, resolve, reject));
     });
   }
 
   public update(configuration: IConfiguration) {
     return new Promise((resolve, reject) => {
-      this.http.put(settings.apiUrl + this.url + '/' + configuration._id, configuration, this.getOptions())
-        .subscribe(x => {
-          if (x.status === 200) {
-            resolve();
-          }
-          else {
-            reject(x.statusText);
-          }
-        })
+      this.jsonHttp.put(settings.apiUrl + this.url + '/' + configuration._id, configuration)
+        .subscribe((response: IResponse<IConfiguration>) => this.handleResponse(response, resolve, reject));
     })
-  }
-
-  private hadleError(error: Response) {
-    console.log(error.statusText);
-    return Observable.throw(error.statusText)
   }
 
   private extractData(res: Response) {
@@ -86,5 +56,14 @@ export class ConfigurationsService {
   private getOptions() {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     return new RequestOptions({ headers: headers });
+  }
+
+  private handleResponse<T>(response: INoDataResponse, resolve, reject) {
+    if (response.isSuccess) {
+      resolve();
+    }
+    else {
+      reject(response.message);
+    }
   }
 }
