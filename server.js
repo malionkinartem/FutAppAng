@@ -15,7 +15,7 @@ app.use(cors())
 // Parsers for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(expressJwt({secret: config.jwtSecret}).unless({path: ['/api/users/login', '/']}));
+app.use(expressJwt({secret: config.jwtSecret}).unless({path: ['/api/users/login', '/', { url: '/api/users', methods: ['POST']  }]}));
 
 // Point static path to dist
 // app.use(express.static(path.join(__dirname, 'dist')));
