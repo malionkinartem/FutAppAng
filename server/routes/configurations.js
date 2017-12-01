@@ -3,10 +3,10 @@ const repository = require('../repositories/configuration-repository');
 module.exports.get = (req, res) => {
     repository.get(req.params)
         .then(configs => {
-            res.status(200).json(configs);
+            res.status(200).json({isSuccess: true, data: configs});
         })
         .catch(error => {
-            res.status(500).send(error)
+            res.status(500).send({isSuccess: false, message: error})
         });
 }
 

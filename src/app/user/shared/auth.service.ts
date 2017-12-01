@@ -1,9 +1,10 @@
 import { Injectable, OnInit } from '@angular/core';
 import { settings } from '../../config'
-import { IUser } from './iuser'
+import { IUser } from './index'
 import { Router } from '@angular/router'
-import { JsonHttpService } from '../../shared/json-http.service'
+import { JsonHttpService, SessionService, IResponse } from '../../shared/index'
 import { Observable } from 'rxjs/Observable'
+
 
 @Injectable()
 export class AuthService implements OnInit {
@@ -15,11 +16,12 @@ export class AuthService implements OnInit {
 
   }
 
-  constructor(private router: Router, private jsonHttp: JsonHttpService) {
+  constructor(private router: Router, private jsonHttp: JsonHttpService, private session: SessionService) {
     const userItem = localStorage.getItem('user_data');
 
     if (!!userItem) {
       this.user = JSON.parse(userItem);      
+      this.session.AuthToken = this.user.authToken;
     }
   }
 
@@ -29,6 +31,7 @@ export class AuthService implements OnInit {
         if (res.isSuccess) {
           localStorage.setItem('user_data', JSON.stringify(res.data));
           this.user = <IUser>res.data;
+          this.session.AuthToken = this.user.authToken;
         }
 
         return res.isSuccess;

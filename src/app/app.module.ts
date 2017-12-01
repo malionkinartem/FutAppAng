@@ -15,6 +15,7 @@ import { NavComponent } from './nav/nav.component';
 import { AuthService, AuthGuard } from './user/shared/index';
 import { HomeComponent } from './home/home.component';
 import { LoadingComponent } from './common/loading/loading.component';
+import { SessionService } from './shared/session.service'
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { LoadingComponent } from './common/loading/loading.component';
     DataListsService,
     PlayersService,
     AuthService,
-    AuthGuard
+    AuthGuard,
+    SessionService
   ],
   bootstrap: [AppComponent]
 })

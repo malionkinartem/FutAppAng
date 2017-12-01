@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from '../user/login/login.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SimpleModalComponent, ModalTriggerDirective, EqualValidatorDirective } from '../common/index';
-import { JsonHttpService } from './json-http.service'
+import { JsonHttpService } from './index'
 import { HttpModule } from '@angular/http'
 
 @NgModule({

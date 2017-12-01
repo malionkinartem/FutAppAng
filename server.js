@@ -3,6 +3,8 @@ const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+var expressJwt = require('express-jwt');
+var config = require('./server/config.js')
 
 // Get our API routes
 const api = require('./server/routes/api');
@@ -13,6 +15,7 @@ app.use(cors())
 // Parsers for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressJwt({secret: config.jwtSecret}).unless({path: ['/api/users/login', '/']}));
 
 // Point static path to dist
 // app.use(express.static(path.join(__dirname, 'dist')));

@@ -1,7 +1,8 @@
 var repository = require('../repositories/users-repository');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
-var encryption = require('../services/encription')
+var encryption = require('../services/encription');
+var config = require('../config')
 
 const privateKey = "FUT_USER_ENCRYPTION_KEY";
 
@@ -20,7 +21,7 @@ module.exports.add = (req, res) => {
                 user.agents = JSON.parse(encryption.decrypt(user.agents));
             }
 
-            res.status(200).json(user);
+            res.status(200).json({isSuccess: true, data: user});
         })
         .catch(error => {
             res.status(500).send(error);
@@ -30,10 +31,10 @@ module.exports.add = (req, res) => {
 module.exports.get = (req, res) => {
     repository.get(req.params)
         .then(users => {
-            res.status(200).json(users);
+            res.status(200).json({isSuccess: true, data: users});
         })
         .catch(error => {
-            res.status(500).send(error)
+            res.status(500).send({isSuccess: false, message: error})
         });
 }
 
@@ -48,22 +49,25 @@ module.exports.login = (req, res) => {
                     let token = jwt.sign({
                         username: req.body.username,
                         password: req.body.password
-                    }, 'secret');
+                    }, config.jwtSecret);
 
                     res.status(200).json({
-                        isSuccess: true, user: {
+                        isSuccess: true, 
+                        data: {
                             username: user.username,
-                            authToken: token, firstname: user.firstname, lastname: user.lastname,
+                            authToken: token, 
+                            firstname: user.firstname, 
+                            lastname: user.lastname,
                             _id: user._id
                         }
                     });
                 }
                 else {
-                    res.status(200).json({ isSuccess: false });
+                    res.status(200).json({ isSuccess: false, message: 'User name or password invalid.' });
                 }
             }
             else {
-                res.status(200).json({ isSuccess: false });
+                res.status(200).json({ isSuccess: false, message: 'User name or password invalid.' });
             }
         })
         .catch(error => {
