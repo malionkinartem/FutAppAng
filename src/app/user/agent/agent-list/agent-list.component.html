@@ -1,3 +1,13 @@
-<p>
-  agent-list works!
-</p>
+<h3>Agents</h3>
+<div *ngFor="let agent of agents">
+  <div class="row">
+    <div class="col-md-8">{{agent.agentname}}</div>
+    <div class="col-md-1">{{agent.platform}}</div>
+    <div class="col-md-1">
+      <a [routerLink]="['/', 'user', 'profile', 'agent', agent.agentname]">Edit</a>
+    </div>
+    <div class="col-md-1">
+      <a role="button" class="clicable" (click)="deleteAgent(agent.agentname)">Delete</a>
+    </div>  
+  </div>
+</div>

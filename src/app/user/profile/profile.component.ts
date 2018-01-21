@@ -3,7 +3,6 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { AuthService, UserService } from '../shared/index'
 import { Router } from '@angular/router'
 
-
 @Component({
   selector: 'fut-profile',
   templateUrl: './profile.component.html',
@@ -13,7 +12,13 @@ export class ProfileComponent implements OnInit {
 
   profile: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private userService: UserService, private router: Router) { }
+  isNewOpen: boolean
+
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private userService: UserService,
+    private router: Router) { }
 
   ngOnInit() {
     this.profile = this.fb.group({
@@ -28,7 +33,7 @@ export class ProfileComponent implements OnInit {
   }
 
   save(values) {
-    
+
     let updatedUser = Object.assign({}, this.auth.user);
     updatedUser.firstname = values.firstname;
     updatedUser.lastname = values.lastname;
@@ -37,10 +42,14 @@ export class ProfileComponent implements OnInit {
       .subscribe(isSuccess => {
 
         if (isSuccess) {
-          this.auth.updateUserData({ firstname: values.firstname, lastname: values.lastname });
+           this.auth.updateUserData({ firstname: values.firstname, lastname: values.lastname });
         }
 
         this.router.navigate(['/']);
       })
+  }
+
+  addAgent() {
+    this.router.navigate(['user', 'profile', 'agent']);
   }
 }

@@ -1,5 +1,5 @@
 export interface IAgent {
-    id: string,
+    agentname: string,
     password: string,
-    consoleType: string
+    platform: string
 }

@@ -11,6 +11,16 @@
     <label for="lastname">Last Name:</label>
     <input type="text" formControlName="lastname" class="form-control" />
   </div>
-  <button type="submit" class="btn btn-primary">Save</button>
-  <button (click)="cancel()" class="btn btn-default">Cancel</button>
+
+  <div>
+    <fut-agent-list [hidden]="this.auth.user.agents === undefined || auth.user.agents.length === 0" [agents]="auth.user.agents"></fut-agent-list>
+    <div>
+      <a role="button" (click)="addAgent()">Add Agent</a>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button (click)="cancel()" class="btn btn-default">Cancel</button>
+  </div>
 </form>

@@ -3,6 +3,7 @@ var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 var encryption = require('../services/encription');
 var config = require('../config')
+let service = require('../services/user.services');
 
 const privateKey = "FUT_USER_ENCRYPTION_KEY";
 
@@ -21,21 +22,16 @@ module.exports.add = (req, res) => {
                 user.agents = JSON.parse(encryption.decrypt(user.agents));
             }
 
-            res.status(200).json({isSuccess: true, data: user});
+            res.status(200).json({ isSuccess: true, data: user });
         })
         .catch(error => {
             res.status(500).send(error);
         });
 }
 
-module.exports.get = (req, res) => {
-    repository.get(req.params)
-        .then(users => {
-            res.status(200).json({isSuccess: true, data: users});
-        })
-        .catch(error => {
-            res.status(500).send({isSuccess: false, message: error})
-        });
+module.exports.get = async (req, res) => {
+    let result = await service.get(req.params);
+    res.status(resul.isSuccess ? 200 : 500).json(result);
 }
 
 module.exports.login = (req, res) => {
@@ -52,12 +48,13 @@ module.exports.login = (req, res) => {
                     }, config.jwtSecret);
 
                     res.status(200).json({
-                        isSuccess: true, 
+                        isSuccess: true,
                         data: {
                             username: user.username,
-                            authToken: token, 
-                            firstname: user.firstname, 
+                            authToken: token,
+                            firstname: user.firstname,
                             lastname: user.lastname,
+                            agents: user.agents,
                             _id: user._id
                         }
                     });

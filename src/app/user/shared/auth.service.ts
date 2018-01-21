@@ -38,6 +38,10 @@ export class AuthService implements OnInit {
       });
   }
 
+  updateUser(){
+    localStorage.setItem('user_data', JSON.stringify(this.user));
+  }
+
   isLoggedIn() {
     return !!this.user;
   }

@@ -1,3 +1,35 @@
-<p>
-  create-edit works!
-</p>
+<form [formGroup]="agentFormGroup" (submit)="save(agentFormGroup.value)" class="col-md-6">
+    <h3 [hidden]="!isNewAgent">Add Agent</h3>
+    <h3 [hidden]="isNewAgent">Modify Agent</h3>
+
+    <span [hidden]="isError" class="error-message">{{validationMessage}}</span>
+
+    <div class="form-group" [ngClass]="{'has-error' : !agentFormGroup.controls['agentusername'].valid
+    && agentFormGroup.controls['agentusername'].touched }">
+    {{isNewUser}}
+        <label for="agentusername">Login:<span [hidden]="isNewAgent">  {{this.agentId}}</span></label>                
+        <input type="text" [hidden]="!isNewAgent" formControlName="agentusername" placeholder="User Name" class="form-control" />
+    </div>
+    <div [ngClass]="{'has-error' : !agentFormGroup.controls['consoleTypesDdl'].valid
+    && agentFormGroup.controls['consoleTypesDdl'].touched }" >
+        <label for="consoleTypes">Platform:</label>
+        <ng-select [items]="consoleTypes" [active]="consoleTypes" (selected)="onChangeConsoleType($event)" formControlName="consoleTypesDdl">
+        </ng-select>
+    </div>
+    <div [ngClass]="{'has-error' : !agentFormGroup.controls['agentpassword'].valid
+    && agentFormGroup.controls['agentpassword'].touched }" >
+        <label for="agentpassword">Password:</label>
+        <input type="password" formControlName="agentpassword" placeholder="Password" class="form-control" />
+    </div>
+    <div [ngClass]="{'has-error' : !agentFormGroup.controls['agentrepeatpassword'].valid
+    && agentFormGroup.controls['agentrepeatpassword'].touched }" >
+        <label for="agentrepeatpassword">Repeat Password:</label>
+        <input type="password" formControlName="agentrepeatpassword" placeholder="Repeat Password" futEqualValidator="agentpassword"
+            class="form-control" />
+    </div>
+
+    <div class="form-group actions">
+        <button type="submit" class="btn btn-primary" [disabled]="agentFormGroup.invalid">Save</button>
+        <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
+    </div>
+</form>

@@ -1,4 +1,8 @@
+var mongoose = require('mongoose');
+
 var BaseRepository = require('./base-repository');
+
+var agentsSchema = new mongoose.Schema({ agentname: String, password: String, platform: String });
 
 function UserRepository() {
     var collectionName = "users";
@@ -7,7 +11,7 @@ function UserRepository() {
         lastname: String,
         username: String,
         password: String,
-        agents: String
+        agents: [agentsSchema]
     }
 
     BaseRepository.apply(this, [schema, collectionName]);

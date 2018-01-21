@@ -21,6 +21,11 @@ export class UserService {
       .map((response: INoDataResponse) => response.isSuccess);
   }
 
+  public get(id: number): Observable<IUser>{
+    return this.jsonHttp.get(this.getUrl(this.userApi) + '/' + id)
+      .map((response: IResponse<IUser>) => response.data);
+  }
+
   private getUrl(relativeUrl) {
     return settings.apiUrl + relativeUrl;
   }

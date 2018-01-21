@@ -8,6 +8,7 @@ import { userRoutes } from './routes';
 import { ProfileComponent } from './profile/profile.component'
 import { AgentListComponent, CreateEditComponent, UserService } from './index';
 import { RegisterComponent } from './register/register.component'
+import { SelectModule } from 'ng2-select';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { RegisterComponent } from './register/register.component'
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    RouterModule.forChild(userRoutes)
+    RouterModule.forChild(userRoutes),
+    SelectModule
   ],
   providers: [
     UserService
